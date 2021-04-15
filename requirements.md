@@ -1,12 +1,14 @@
 # Vision  
 What is our vision for this project?  
-** Vision goes here**
+** This would be a public art gallery where anybody can post art they are proud of to be shared with the world. **
 
 What pain point does this project solve?  
-** Purpose goes here*
+** Aspiring artist might have a hard time finding the right platform to share their content to the world. 
+This website would provide a centralized location for many artists to share their work **
 
 Why should you care about this project?  
-* Why they care goes here*
+* This project will help get many creative minds the platform they need to express themselves 
+* and explore their creativity with a wide arrangment of constructive feedback *
 
 
 # Scope
