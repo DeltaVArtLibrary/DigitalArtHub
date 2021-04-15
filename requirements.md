@@ -21,10 +21,16 @@ This project will link art, artists, and those who appreciate it together. It wi
 
 This project will **not**  
 1. Allow people to take other peoples art and pass it off as their own.   
-2. It will not be a way for people to sell their art  
+2. It will not be a way for people to sell their art.
+3. It will not be a way for people to spread or share pornographic images or videos or sounds. 
 
 
-** Stretch goals go here**   
+
+*Stretch goals*  
+1. Supporting multiple media types
+2. Customized Profile, displaying art in ways the artist wants. 
+3. Dark mode/light mode
+4. An artist Featured page
  
 ** Functional Requirements**   
 An admin can manage the database   
