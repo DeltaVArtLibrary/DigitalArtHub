@@ -4,7 +4,7 @@ Created and finished by:
 - Nathan Hall (Link to Github here)
 - Jean McMahon (Link to Github here)
 - Adara Townsends (Link to Github here)
-- Ben Hemann (Link to Github here)
+- Ben Hemann [Github](https://github.com/Kozer2)
 
 # Links to different parts of code
 
