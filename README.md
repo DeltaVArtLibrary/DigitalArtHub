@@ -13,7 +13,7 @@ Created and finished by:
 
 
 # User stories
-[UserStories](User-Stories.md)
+[User Stories](User-Stories.md)
 
 
 # Links to different parts of code
