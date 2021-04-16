@@ -13,7 +13,7 @@ Created and finished by:
 
 
 # User stories
-[User Stories](User-Stories.md)
+[User Stories](https://github.com/DeltaVArtLibrary/DigitalArtHub/projects/1)
 
 
 # Links to different parts of code
