@@ -12,8 +12,7 @@ Created and finished by:
     - [Github](https://github.com/Kozer2)
 
 
-# User stories
-[UserStories](requirements.md)
+
 
 
 # Links to different parts of code
@@ -32,13 +31,13 @@ When we sat down to discuss the database relationships we came up with this for 
 
 # Dependencies Used
 The dependencies we used are:
- - Microsoft.AspNetCore.Authentication.JwtBearer
+ <!-- - Microsoft.AspNetCore.Authentication.JwtBearer
  - Microsoft.AspNetCore.Identity.EntityFrameworkCore
  - Microsoft.AspNetCore.Mvc.NewtonsoftJson
  - Microsoft.EntityFrameworkCore.SqlServer
  - Microsoft.EntityFrameworkCore.Tools
  - Microsoft.VisualStudio.Web.CodeGeneration.Design
- - Swashbuckle.AspNetCore
+ - Swashbuckle.AspNetCore -->
 
 # Tools Used
 
