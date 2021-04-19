@@ -4,11 +4,13 @@
 
 ### As a User I want to be able to sign up for and then sign into an account so that I can begin building an art portfolio
 
-- Require Username
+- Require Display Name
 - Require Password
 - Required Email
 
 ### As a shy user I would like to be able to set my accout to private so only I can view it
+- Take a boolean for public or private and default to public
+- Private meaning all of their art or profile won't show up in search
 
 ### As a User I want to be able to "create" a piece of art to my profile. 
 
@@ -98,7 +100,7 @@ Add members
 - Allow permission level default to member
 - *maybe allow added user to confirm the addition*
 - Return Group DTO
-- *If user ID is invalid return some sort of user not found message (???)*
+- If user ID is invalid return a 404 error with body saying "member not found" or something of that sort
 
 Remove member
 
@@ -151,7 +153,8 @@ Get all art
 
 Stretch goal:
 - Collections
-- comments
+- Comments
+- Privacy
 
 
 
