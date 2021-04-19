@@ -12,8 +12,7 @@ Created and finished by:
     - [Github](https://github.com/Kozer2)
 
 
-#User stories
-![UserStories](requirements.md)
+
 
 
 # Links to different parts of code
