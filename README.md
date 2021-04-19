@@ -14,7 +14,6 @@ Created and finished by:
 
 
 
-
 # Links to different parts of code
 
 
@@ -26,7 +25,7 @@ This is our first rough example for our ERD.
 
 
 When we sat down to discuss the database relationships we came up with this for our ERD.
-![Diagram](assets/ERD.PNG)
+![Diagram](assets/DigitalArtHubERD.png)
 
 
 
