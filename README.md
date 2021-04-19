@@ -1,4 +1,5 @@
 
+
 # DigitalArtHub
 ### Mid-term project for DeltaV   
 Created and finished by:
@@ -12,8 +13,7 @@ Created and finished by:
     - [Github](https://github.com/Kozer2)
 
 
-# User stories
-[UserStories](requirements.md)
+
 
 
 # Links to different parts of code
@@ -30,7 +30,15 @@ When we sat down to discuss the database relationships we came up with this for 
 ![Diagram](assets/DigitalArtHubERD.png)
 
 
-
+# Dependencies Used
+The dependencies we used are:
+ <!-- - Microsoft.AspNetCore.Authentication.JwtBearer
+ - Microsoft.AspNetCore.Identity.EntityFrameworkCore
+ - Microsoft.AspNetCore.Mvc.NewtonsoftJson
+ - Microsoft.EntityFrameworkCore.SqlServer
+ - Microsoft.EntityFrameworkCore.Tools
+ - Microsoft.VisualStudio.Web.CodeGeneration.Design
+ - Swashbuckle.AspNetCore -->
 
 # Tools Used
 
@@ -42,3 +50,4 @@ When we sat down to discuss the database relationships we came up with this for 
 
 
 # How to use it
+
