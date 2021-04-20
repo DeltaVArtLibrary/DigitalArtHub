@@ -2,19 +2,28 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ArtHub.Data.Interfaces
 {
-    interface DbProfileRepository : IProfileRepository
+    class DbProfileRepository : IProfileRepository
     {
 
         private readonly ArtHubDbContext _context;
 
         public DbProfileRepository(ArtHubDbContext context)
         {
-            _context = context;
+            this._context = context;
+        }
+
+        public Task<Profile> GetProfile(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Profile>> GetProfiles()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task PostProfile(Profile profile)
@@ -36,7 +45,7 @@ namespace ArtHub.Data.Interfaces
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProfileExists(profile.Id))
+                if (!ProfileExists(profile.ProfileId))
                 {
                     return false;
                 }
