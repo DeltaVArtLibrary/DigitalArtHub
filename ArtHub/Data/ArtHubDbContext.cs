@@ -17,8 +17,19 @@ namespace ArtHub.Data
 
         }
         public DbSet<Profile> Profiles { get; set; }
-        public DbSet<Collection> Collections { get; set; }
-        
-        public DbSet<Art> Art { get; set; } 
+        public DbSet<Collection> Collections { get; set; }        
+        public DbSet<Art> Art { get; set; }
+        public DbSet<ArtCollection> ArtCollections { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<ArtCollection>().HasKey(artCollection => new
+            {
+                artCollection.ArtId,
+                artCollection.CollectionId
+            });
+        }
     }
 }
