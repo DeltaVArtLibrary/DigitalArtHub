@@ -98,7 +98,6 @@ namespace ArtHub
                 endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
-                    
                     context.Response.Redirect("/docs");
                     await context.Response.WriteAsync("Hello World!");
                 });
