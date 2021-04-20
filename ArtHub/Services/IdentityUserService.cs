@@ -9,9 +9,12 @@ namespace ArtHub.Services
     public class IdentityUserService : IUserService
     {
         private readonly UserManager<ApplicationUser> userManager;
-        public IdentityUserService(UserManager<ApplicationUser> userManager)
+        private readonly JwtTokenService tokenService;
+
+        public IdentityUserService(UserManager<ApplicationUser> userManager, JwtTokenService tokenService)
         {
             this.userManager = userManager;
+            this.tokenService = tokenService;
         }
 
         public UserManager<ApplicationUser> UserManager { get; }

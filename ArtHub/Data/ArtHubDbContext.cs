@@ -24,7 +24,9 @@ namespace ArtHub.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // base is used due to IDentityDbContext
             base.OnModelCreating(builder);
+            
 
             builder.Entity<ArtCollection>().HasKey(artCollection => new
             {

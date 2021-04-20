@@ -48,6 +48,7 @@ namespace ArtHub
 
             // services.AddTransient go below
             services.AddTransient<IUserService, IdentityUserService>();
+            services.AddTransient<JwtTokenService>();
 
 
 
