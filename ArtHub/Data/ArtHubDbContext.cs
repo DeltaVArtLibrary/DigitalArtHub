@@ -1,4 +1,6 @@
 ﻿using ArtHub.Models;
+using ArtHub.Models.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ArtHub.Data
 {
-    public class ArtHubDbContext : DbContext
+    public class ArtHubDbContext : IdentityDbContext<ApplicationUser>
     {
         public ArtHubDbContext(DbContextOptions options) : base(options)
         {
