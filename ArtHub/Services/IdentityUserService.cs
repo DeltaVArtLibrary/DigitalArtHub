@@ -20,11 +20,8 @@ namespace ArtHub.Services
         {
            var user = await userManager.FindByNameAsync(username);
             if (await userManager.CheckPasswordAsync(user, password))
-                return new UserDto
-                {
-                    Id = user.Id,
-                    Username = user.UserName,
-                };
+                return GetUserDto(user);
+
             return null;
 
         }
@@ -41,13 +38,9 @@ namespace ArtHub.Services
             var result = await userManager.CreateAsync(user, data.Password);
 
             if (result.Succeeded)
-                return new UserDto
-                {
-                    Id = user.Id,
-                    Username = user.UserName,
-                };
+                return GetUserDto(user);
 
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
                 var errorKey =
                     error.Code.Contains("Email") ? nameof(data.Email) :
@@ -58,6 +51,15 @@ namespace ArtHub.Services
             }
 
             return null;
+        }
+
+        private  static UserDto GetUserDto(ApplicationUser user)
+        {
+            return new UserDto
+            {
+                Id = user.Id,
+                Username = user.UserName,
+            };
         }
     }
 }
