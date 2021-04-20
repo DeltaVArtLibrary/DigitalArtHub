@@ -10,6 +10,6 @@ namespace ArtHub.Services
 {
     public interface IUserService
     {
-        Task<ApplicationUser> Register(RegisterData data, ModelStateDictionary modelState);
+        Task<UserDto> Register(RegisterData data, ModelStateDictionary modelState);
     }
 }

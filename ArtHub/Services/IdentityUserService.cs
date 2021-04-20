@@ -16,7 +16,7 @@ namespace ArtHub.Services
 
         public UserManager<ApplicationUser> UserManager { get; }
 
-        public async Task<ApplicationUser> Register(RegisterData data, ModelStateDictionary modelState)
+        public async Task<UserDto> Register(RegisterData data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
@@ -28,7 +28,11 @@ namespace ArtHub.Services
             var result = await userManager.CreateAsync(user, data.Password);
 
             if (result.Succeeded)
-                return user;
+                return new UserDto
+                {
+                    Id = user.Id,
+                    Username = user.UserName,
+                };
 
             foreach(var error in result.Errors)
             {
