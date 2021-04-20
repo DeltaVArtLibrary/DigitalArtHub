@@ -4,14 +4,16 @@ using ArtHub.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ArtHub.Migrations
 {
     [DbContext(typeof(ArtHubDbContext))]
-    partial class ArtHubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210420183558_ArtCollectionsTable")]
+    partial class ArtCollectionsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
