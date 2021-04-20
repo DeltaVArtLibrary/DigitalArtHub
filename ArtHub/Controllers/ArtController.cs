@@ -7,30 +7,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtHub.Data;
 using ArtHub.Models;
+using ArtHub.Data.Interfaces;
 
 namespace ArtHub.Controllers 
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ArtsController : ControllerBase
+    public class ArtController : ControllerBase
     {
         private readonly ArtHubDbContext _context;
+        private readonly IArtRepository artRepository;
 
-        public ArtsController(ArtHubDbContext context)
+        public ArtController(ArtHubDbContext context, IArtRepository artRepository)
         {
             _context = context;
+            this.artRepository = artRepository;
         }
 
         // GET: api/Arts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Art>>> GetArt()
+        public async Task<ActionResult<IEnumerable<Art>>> GetAllArt()
         {
             return await _context.Art.ToListAsync();
         }
 
         // GET: api/Arts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Art>> GetArt(int id)
+        public async Task<ActionResult<Art>> GetArtPiece(int id)
         {
             var art = await _context.Art.FindAsync(id);
 

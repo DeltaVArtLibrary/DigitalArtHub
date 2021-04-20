@@ -71,6 +71,7 @@ namespace ArtHub
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
                     context.Response.Redirect("/docs");
