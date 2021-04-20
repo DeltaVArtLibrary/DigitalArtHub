@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.Extensions.Configuration;
-using ArtHub.data;
+using ArtHub.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtHub
