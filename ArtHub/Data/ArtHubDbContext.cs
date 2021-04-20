@@ -18,6 +18,7 @@ namespace ArtHub.Data
         }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Collection> Collections { get; set; }
-
+        
+        public DbSet<Art> Art { get; set; } 
     }
 }
