@@ -11,6 +11,7 @@ namespace ArtHub.Models
         public int ProfileId { get; set; }
 
         [Required]
+        [StringLength(50)]
         public string DisplayName { get; set; }
 
         [StringLength(1500)]
