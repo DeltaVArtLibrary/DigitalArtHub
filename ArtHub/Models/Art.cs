@@ -8,8 +8,12 @@ namespace ArtHub.Models
 {
     public class Art
     {
-        public int ArtId { get; set; }   
-        
+        public int ArtId { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string Title { get; set; }
+
         [Required]
         public string Content { get; set; }
 
@@ -22,7 +26,6 @@ namespace ArtHub.Models
         public DateTime UploadDate { get; set; }
 
         [Required]
-
         public int ProfileId { get; set; }
 
         //Navigation Properties

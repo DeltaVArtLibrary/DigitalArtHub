@@ -4,14 +4,16 @@ using ArtHub.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ArtHub.Migrations
 {
     [DbContext(typeof(ArtHubDbContext))]
-    partial class ArtHubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210420192838_AddedProfileMemberTable")]
+    partial class AddedProfileMemberTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,11 +41,6 @@ namespace ArtHub.Migrations
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("UploadDate")
                         .IsConcurrencyToken()
