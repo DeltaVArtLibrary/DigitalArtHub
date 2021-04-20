@@ -20,6 +20,7 @@ namespace ArtHub.Data
         public DbSet<Collection> Collections { get; set; }        
         public DbSet<Art> Art { get; set; }
         public DbSet<ArtCollection> ArtCollections { get; set; }
+        public DbSet<ProfileMember> ProfileMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,6 +31,12 @@ namespace ArtHub.Data
                 artCollection.ArtId,
                 artCollection.CollectionId
             });
+            builder.Entity<ProfileMember>()
+                .HasKey(profileMember => new
+                {
+                    profileMember.ProfileId,
+                    profileMember.UserId
+                });
         }
     }
 }
