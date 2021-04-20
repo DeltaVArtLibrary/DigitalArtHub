@@ -12,6 +12,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.Extensions.Configuration;
 using ArtHub.Data;
 using Microsoft.EntityFrameworkCore;
+using ArtHub.Models.Identity;
+using Microsoft.AspNetCore.Identity;
+using ArtHub.Services;
 
 namespace ArtHub
 {
@@ -33,6 +36,21 @@ namespace ArtHub
            });
 
             services.AddControllers();
+
+
+            // Add in the requires a unique email for signup
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+
+            })
+            .AddEntityFrameworkStores<ArtHubDbContext>();
+
+            // services.AddTransient go below
+            services.AddTransient<IUserService, IdentityUserService>();
+
+
+
             services.AddSwaggerGen(options =>
             {
                 // Make sure get the "using Statement"
@@ -42,6 +60,11 @@ namespace ArtHub
                     Version = "v1",
                 });
             });
+
+           
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,8 +94,10 @@ namespace ArtHub
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
+                    
                     context.Response.Redirect("/docs");
                     await context.Response.WriteAsync("Hello World!");
                 });
