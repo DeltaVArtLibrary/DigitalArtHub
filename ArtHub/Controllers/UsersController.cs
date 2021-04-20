@@ -21,7 +21,7 @@ namespace ArtHub.Controllers
         }
 
         // uses registerData model to create a new user
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterData data)
         {
             var user = await userService.Register(data, this.ModelState);

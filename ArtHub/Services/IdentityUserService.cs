@@ -26,6 +26,7 @@ namespace ArtHub.Services
             };
 
             var result = await userManager.CreateAsync(user, data.Password);
+
             if (result.Succeeded)
                 return user;
 
