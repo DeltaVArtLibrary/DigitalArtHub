@@ -17,7 +17,7 @@ namespace ArtHub.Data
             _context = context;
         }
 
-        public async Task CreateCollection(int profileId, CreateCollection collection)
+        public async Task<Collection> CreateCollection(int profileId, CreateCollection collection)
         {
             Collection newCollection = new Collection {
                 Title = collection.Title,
@@ -25,6 +25,8 @@ namespace ArtHub.Data
             };
             _context.Collections.Add(newCollection);
             await _context.SaveChangesAsync();
+
+            return newCollection;
         }
 
         public Task<IEnumerable<CollectionDto>> GetAllProfileCollections(int profileId)

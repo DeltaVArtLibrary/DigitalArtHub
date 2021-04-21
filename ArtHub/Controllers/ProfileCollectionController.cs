@@ -80,17 +80,16 @@ namespace ArtHub.Controllers
             return NoContent();
         }
 
-        // POST: api/Profile/{profileId}/Collection/{collectionId}
+        // POST: api/Profile/{profileId}/Collection
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("{collectionId}")]
-        public async Task<ActionResult<Collection>> PostCollection(Collection collection)
+        [HttpPost]
+        public async Task<ActionResult<Collection>> PostCollection(int profileId, [FromBody] CreateCollection collection)
         {
-            throw new NotImplementedException();
+            if (profileId != collection.ProfileId)
+                return BadRequest();
+            Collection newCollection = await profileCollectionRepository.CreateCollection(profileId, collection);
 
-            _context.Collections.Add(collection);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCollection", new { id = collection.CollectionId }, collection);
+            return CreatedAtAction("GetCollection", new { profileId = newCollection.ProfileId, collectionId = newCollection.CollectionId }, newCollection);
         }
 
         // DELETE: api/Profile/{profileId}/Collection/{collectionId}
