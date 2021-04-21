@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using ArtHub.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using ArtHub.Services;
+using ArtHub.Data.Interfaces;
 
 namespace ArtHub
 {
@@ -48,7 +49,11 @@ namespace ArtHub
 
             // services.AddTransient go below
             services.AddTransient<IUserService, IdentityUserService>();
+
+            services.AddTransient<IArtRepository, DbArtRepository>();
+
             services.AddTransient<JwtTokenService>();
+
 
 
 

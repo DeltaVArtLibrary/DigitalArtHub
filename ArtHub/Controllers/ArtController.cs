@@ -24,18 +24,20 @@ namespace ArtHub.Controllers
             this.artRepository = artRepository;
         }
 
-        // GET: api/Arts
+        // GET: api/Art
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Art>>> GetAllArt()
         {
+            var art = await artRepository.GetAllArt(); 
             return await _context.Art.ToListAsync();
         }
 
-        // GET: api/Arts/5
+        // GET: api/Art/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Art>> GetArtPiece(int id)
+        public async Task<ActionResult<Art>> GetArt(int id)
         {
-            var art = await _context.Art.FindAsync(id);
+            var art = await artRepository.GetArt(id);
+            //var art = await _context.Art.FindAsync(id);
 
             if (art == null)
             {
@@ -48,7 +50,7 @@ namespace ArtHub.Controllers
         // PUT: api/Arts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArt(int id, Art art)
+        public async Task<IActionResult> UpdateArt(int id, Art art)
         {
             if (id != art.ArtId)
             {
@@ -79,7 +81,7 @@ namespace ArtHub.Controllers
         // POST: api/Arts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Art>> PostArt(Art art)
+        public async Task<ActionResult<Art>> CreateArt(Art art)
         {
             _context.Art.Add(art);
             await _context.SaveChangesAsync();
@@ -107,5 +109,6 @@ namespace ArtHub.Controllers
         {
             return _context.Art.Any(e => e.ArtId == id);
         }
+
     }
 }
