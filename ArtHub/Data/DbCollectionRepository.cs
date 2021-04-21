@@ -35,5 +35,24 @@ namespace ArtHub.Data
                 })
                 .ToListAsync();
         }
+
+        public async Task<CollectionDto> GetCollection(int collectionId)
+        {
+            return await _context.Collections
+                .Select(collection => new CollectionDto
+                {
+                    CollectionId = collection.CollectionId,
+                    ProfileId = collection.ProfileId,
+                    Title = collection.Title,
+                    Description = collection.Description,
+                    Art = collection.ArtCollections.Select(a => new tempArtDto
+                    {
+                        Id = a.ArtId,
+                        Title = a.Art.Title
+                    }).ToList()
+                })
+                .Where(c => c.CollectionId == collectionId)
+                .FirstOrDefaultAsync();
+        }
     }
 }

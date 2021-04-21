@@ -30,5 +30,19 @@ namespace ArtHub.Controllers
         {
             return Ok(await collectionRepository.GetAllCollections());
         }
+        // GET: api/Collection/{collectionId}
+        [HttpGet("{collectionId}")]
+        public async Task<ActionResult<Collection>> GetCollection(int collectionId)
+        {
+            var collection = await collectionRepository.GetCollection(collectionId);
+
+            if (collection == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(collection);
+        }
+
     }
 }

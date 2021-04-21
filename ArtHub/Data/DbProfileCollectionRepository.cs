@@ -50,23 +50,9 @@ namespace ArtHub.Data
 
         }
 
-        public async Task<CollectionDto> GetProfileCollection(int profileId, int collectionId)
+        public async Task<CollectionDto> GetProfileCollection(int collectionId)
         {
-            return await _context.Collections
-                .Select(collection => new CollectionDto
-                {
-                    CollectionId = collection.CollectionId,
-                    ProfileId = collection.ProfileId,
-                    Title = collection.Title,
-                    Description = collection.Description,
-                    Art = collection.ArtCollections.Select(a => new tempArtDto
-                    {
-                        Id = a.ArtId,
-                        Title = a.Art.Title
-                    }).ToList()
-                })
-                .Where(c => c.ProfileId == profileId)
-                .FirstOrDefaultAsync();
+            return await new DbCollectionRepository(_context).GetCollection(collectionId);
         }
 
         public Task<bool> UpdateProfileCollection(int profileId, int collectionId)

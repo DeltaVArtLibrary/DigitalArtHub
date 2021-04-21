@@ -26,25 +26,23 @@ namespace ArtHub.Controllers
 
         // GET: api/Profile/{profileId}/Collection
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Collection>>> GetProfileCollections()
+        public async Task<ActionResult<IEnumerable<Collection>>> GetProfileCollections(int profileId)
         {
-            throw new NotImplementedException();
+            return Ok(await profileCollectionRepository.GetAllProfileCollections(profileId));
         }
 
         // GET: api/Profile/{profileId}/Collection/{collectionId}
         [HttpGet("{collectionId}")]
         public async Task<ActionResult<Collection>> GetCollection(int collectionId)
         {
-            throw new NotImplementedException();
-
-            var collection = await _context.Collections.FindAsync(collectionId);
+            var collection = await profileCollectionRepository.GetProfileCollection(collectionId);
 
             if (collection == null)
             {
                 return NotFound();
             }
 
-            return collection;
+            return Ok(collection);
         }
 
         // PUT: api/Profile/{profileId}/Collection/{collectionId}

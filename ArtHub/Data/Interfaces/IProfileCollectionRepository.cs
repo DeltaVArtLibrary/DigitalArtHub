@@ -11,7 +11,7 @@ namespace ArtHub.Data.Interfaces
     {
         Task<Collection> CreateCollection(int profileId, CreateCollection collection);
         Task<IEnumerable<CollectionDto>> GetAllProfileCollections(int profileId);
-        Task<CollectionDto> GetProfileCollection(int profileId, int collectionId);
+        Task<CollectionDto> GetProfileCollection(int collectionId);
         Task<bool> UpdateProfileCollection(int profileId, int collectionId);
 
     }
