@@ -1,5 +1,6 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,15 +22,56 @@ namespace ArtHub.Data
             throw new NotImplementedException();
         }
 
-        public Task<Art> GetArtPiece(int id)
+        public async Task<Art> GetArt(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Art.FindAsync(id);            
         }
-        /*
-public async Task<Art> GetArt(int id)
-{
-   return await _context.Art.FindAsync(Id);
-}
-*/
+
+        public async Task CreateArt(Art art)
+        {
+            _context.Art.Add(art);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> UpdateArt(int id, Art art)
+        {
+            _context.Entry(art).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ArtExists(id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }            
+        }
+
+        public async Task<bool> DeleteArt(int id)
+        {
+            Art art = await GetArt(id);
+            if (art == null)
+            {
+                return false;
+            }
+            _context.Entry(art).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
+            return true;
+            //throw new NotImplementedException();
+        }
+
+        private bool ArtExists(int id)
+        {
+            return _context.Art.Any(e => e.ArtId == id);
+        }
+
     }
 }
+
