@@ -2,6 +2,8 @@
 using ArtHub.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ArtHub.Services
@@ -9,9 +11,12 @@ namespace ArtHub.Services
     public class IdentityUserService : IUserService
     {
         private readonly UserManager<ApplicationUser> userManager;
-        public IdentityUserService(UserManager<ApplicationUser> userManager)
+        private readonly JwtTokenService tokenService;
+
+        public IdentityUserService(UserManager<ApplicationUser> userManager, JwtTokenService tokenService)
         {
             this.userManager = userManager;
+            this.tokenService = tokenService;
         }
 
         public UserManager<ApplicationUser> UserManager { get; }
@@ -20,13 +25,16 @@ namespace ArtHub.Services
         {
            var user = await userManager.FindByNameAsync(username);
             if (await userManager.CheckPasswordAsync(user, password))
-                return new UserDto
-                {
-                    Id = user.Id,
-                    Username = user.UserName,
-                };
+                return await GetUserDtoAsync(user);
+
             return null;
 
+        }
+
+        public async Task<UserDto> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await userManager.GetUserAsync(principal);
+            return await GetUserDtoAsync(user);
         }
 
         public async Task<UserDto> Register(RegisterData data, ModelStateDictionary modelState)
@@ -41,13 +49,9 @@ namespace ArtHub.Services
             var result = await userManager.CreateAsync(user, data.Password);
 
             if (result.Succeeded)
-                return new UserDto
-                {
-                    Id = user.Id,
-                    Username = user.UserName,
-                };
+                return await GetUserDtoAsync(user);
 
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
                 var errorKey =
                     error.Code.Contains("Email") ? nameof(data.Email) :
@@ -58,6 +62,16 @@ namespace ArtHub.Services
             }
 
             return null;
+        }
+
+        private async Task<UserDto> GetUserDtoAsync(ApplicationUser user)
+        {
+            return new UserDto
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(5)),
+            };
         }
     }
 }

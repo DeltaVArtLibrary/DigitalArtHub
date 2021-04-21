@@ -15,6 +15,9 @@ using Microsoft.EntityFrameworkCore;
 using ArtHub.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using ArtHub.Services;
+using ArtHub.Data.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtHub
 {
@@ -49,6 +52,24 @@ namespace ArtHub
             // services.AddTransient go below
             services.AddTransient<IUserService, IdentityUserService>();
 
+            services.AddTransient<IArtRepository, DbArtRepository>();
+
+            services.AddTransient<JwtTokenService>();
+            services.AddAuthorization();
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = JwtTokenService.GetValidationParamters(Configuration);
+                });
+
+
 
 
             services.AddSwaggerGen(options =>
@@ -59,6 +80,15 @@ namespace ArtHub
                     Title = "Digital ArtHub",
                     Version = "v1",
                 });
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer,"
+                });
+                options.OperationFilter<AuthenticationRequirementOperationFilter>();
+
             });
 
            
@@ -91,17 +121,45 @@ namespace ArtHub
 
 
             app.UseRouting();
+            // add in Authentication and Authorization
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
-                    
                     context.Response.Redirect("/docs");
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
         }
+
+        private class AuthenticationRequirementOperationFilter : IOperationFilter
+        {
+            public void Apply(OpenApiOperation operation, OperationFilterContext context)
+            {
+                var hasAnonymous = context.ApiDescription.CustomAttributes().OfType<AllowAnonymousAttribute>().Any();
+                if (hasAnonymous)
+                    return;
+
+                operation.Security ??= new List<OpenApiSecurityRequirement>();
+
+                var scheme = new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme,
+                    },
+                };
+                operation.Security.Add(new OpenApiSecurityRequirement
+                {
+                    [scheme] = new List<string>()
+                });
+            }
+        }
+
     }
 }
