@@ -22,7 +22,6 @@ namespace ArtHub.Models
 
         public string MediaType { get; set; }
 
-        [Timestamp]
         public DateTime UploadDate { get; set; }
 
         [Required]
