@@ -18,18 +18,19 @@ namespace ArtHub.Data.Interfaces
             _context = context;
         }
 
-        public async Task<Profile> GetProfile(int Id)
+        public async Task<ProfileDto> GetProfile(int Id)
         {
             return await _context.Profiles
                 .Select(profile => new ProfileDto
                 {
                     Description = profile.Description,
                     DisplayName = profile.DisplayName,
-                    Id = profile.Id,
-                });
+                    Id = profile.ProfileId,
+                })
+                .FirstOrDefaultAsync(p => p.Id == Id);
         }
 
-        public async Task<IEnumerable<Profile>> GetProfiles()
+        public async Task<List<Profile>> GetProfiles()
         {
             return await _context.Profiles.ToListAsync();
         }
@@ -67,7 +68,7 @@ namespace ArtHub.Data.Interfaces
 
         private bool ProfileExists(int Id)
         {
-            throw new NotImplementedException();
+            return _context.Profiles.Any(p => p.ProfileId == Id);
         }
 
     }
