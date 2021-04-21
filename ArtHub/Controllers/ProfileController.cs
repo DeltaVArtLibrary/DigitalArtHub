@@ -27,29 +27,30 @@ namespace ArtHub.Controllers
         [HttpGet] // Read from database
         public async Task<ActionResult<IEnumerable<Profile>>> GetProfiles()
         {
-            var profile = await profileRepository.GetProfiles(); // Wat is this 
-            return await _context.Profiles.ToListAsync();
+            return await _context.Profiles
+                .Include(p => p.ProfileId)
+                .Include(e => e.DisplayName)
+                .Include(a => a.Description)
+                .ToListAsync();
         }
 
         // GET: api/Profile/5
         [HttpGet("{id}")] // Read
-        public async Task<ActionResult<ProfileDto>> GetProfile(int id)
+        public async Task<ActionResult<Profile>> GetProfile(int id)
         {
-            var profile = await _context.Profiles.Select(profile => new ProfileDto
-            {
-               Id = profile.ProfileId,
-               DisplayName = profile.DisplayName,
-               Description = profile.Description
+            var profile = await _context.Profiles
+                .Include(p => p.ProfileId)
+                .Include(e => e.DisplayName)
+                .Include(a => a.Description)
 
-
-            }).FirstOrDefaultAsync(p => p.Id == id);
+            .FirstOrDefaultAsync(p => p.ProfileId == id);
 
             if (profile == null)
             {
                 return NotFound();
             }
 
-            return Ok(profile);
+            return profile;
         }
 
         // PUT: api/Profile/5
@@ -88,21 +89,10 @@ namespace ArtHub.Controllers
         [HttpPost] // Post means create
         public async Task<ActionResult<Profile>> CreateProfile(Profile profile)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             _context.Profiles.Add(profile);
             await _context.SaveChangesAsync();
 
-            var dto = new ProfileDto()
-            {
-                Id = profile.ProfileId,
-                DisplayName = profile.DisplayName,
-                Description = profile.Description
-            };
-            return CreatedAtAction("GetProfile", new { Id = profile.ProfileId }, dto);
+            return CreatedAtAction("GetProfile", new { Id = profile.ProfileId }, profile);
         }
 
 
