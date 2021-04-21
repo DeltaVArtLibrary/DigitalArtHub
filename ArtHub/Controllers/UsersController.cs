@@ -21,6 +21,7 @@ namespace ArtHub.Controllers
             this.userService = userService;
         }
 
+        [AllowAnonymous]
         // uses registerData model to create a new user
         [HttpPost("Register")]
         public async Task<ActionResult<UserDto>> Register(RegisterData data)
@@ -32,6 +33,7 @@ namespace ArtHub.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<ActionResult<UserDto>> Login(LoginData data)
         {

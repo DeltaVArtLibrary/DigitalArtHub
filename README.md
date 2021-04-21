@@ -38,6 +38,7 @@ The dependencies we used are:
 - Microsoft.AspNetCore.Mvc.NewtonsoftJson
 - Microsoft.EntityFrameworkCore.SqlServer
 - Microsoft.EntityFrameworkCore.Tools
+- Microsoft.AspNetCore.Authentication.JwtBearer
 
  <!-- - Microsoft.AspNetCore.Authentication.JwtBearer
 
