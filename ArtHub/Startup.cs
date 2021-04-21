@@ -52,7 +52,9 @@ namespace ArtHub
             // services.AddTransient go below
             services.AddTransient<IUserService, IdentityUserService>();
 
+            services.AddTransient<ICollectionRepository, DbCollectionRepository>();
             services.AddTransient<IArtRepository, DbArtRepository>();
+            services.AddTransient<IProfileCollectionRepository, DbProfileCollectionRepository>();
 
             services.AddTransient<IProfileRepository, DbProfileRepository>();
 
