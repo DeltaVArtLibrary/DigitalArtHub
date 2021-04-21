@@ -11,7 +11,6 @@ namespace ArtHub.Models.Api
         public int ProfileId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public int MyProperty { get; set; }
         public List<tempArtDto> Art { get; set; }
     }
     public class tempArtDto

@@ -1,6 +1,7 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
 using ArtHub.Models.Api;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,22 @@ namespace ArtHub.Data
             _context = context;
         }
 
-        public Task<IEnumerable<CollectionDto>> GetAllCollections()
+        public async Task<IEnumerable<CollectionDto>> GetAllCollections()
         {
-            throw new NotImplementedException();
+            return await _context.Collections
+                .Select(collection => new CollectionDto
+                {
+                    CollectionId = collection.CollectionId,
+                    ProfileId = collection.ProfileId,
+                    Title = collection.Title,
+                    Description = collection.Description,
+                    Art = _context.Art.Select(art => new tempArtDto
+                    {
+                        Id = art.ArtId,
+                        Title = art.Title
+                    }).ToList()
+                })
+                .ToListAsync();
         }
     }
 }
