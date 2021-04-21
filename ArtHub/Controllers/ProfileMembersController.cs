@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ArtHub.Data;
 using ArtHub.Models;
 using ArtHub.Data.Interfaces;
+using ArtHub.Models.Api;
 
 namespace ArtHub.Controllers
 {
@@ -15,16 +16,35 @@ namespace ArtHub.Controllers
     [ApiController]
     public class ProfileMembersController : ControllerBase
     {
-        private readonly ArtHubDbContext _context;
+        
         private readonly IProfileMembersRepository profileMembersRepository;
 
         public ProfileMembersController(ArtHubDbContext context, IProfileMembersRepository profileMembersRepository)
         {
-            _context = context;
+            
             this.profileMembersRepository = profileMembersRepository;
         }
 
-        // GET: api/ProfileMembers
+        
+
+
+        // POST: api/ProfileMembers
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<ProfileDto>> PostProfileMember(ProfileMember profileMember)
+        {
+
+            return Ok(await profileMembersRepository.CreateProfileMember(profileMember));
+        }
+
+        /*private bool ProfileMemberExists(int id)
+        {
+            return profileMembersRepository.ProfileMembers.Any(e => e.ProfileId == id);
+        }*/
+
+
+
+        /*// GET: api/ProfileMembers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProfileMember>>> GetProfileMembers()
         {
@@ -74,32 +94,8 @@ namespace ArtHub.Controllers
             }
 
             return NoContent();
-        }
+        }*/
 
-        // POST: api/ProfileMembers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<ProfileMember>> PostProfileMember(ProfileMember profileMember)
-        {
-            _context.ProfileMembers.Add(profileMember);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ProfileMemberExists(profileMember.ProfileId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetProfileMember", new { id = profileMember.ProfileId }, profileMember);
-        }
 
         /*// DELETE: api/ProfileMembers/5
         [HttpDelete("{id}")]
@@ -117,9 +113,5 @@ namespace ArtHub.Controllers
             return NoContent();
         }*/
 
-        private bool ProfileMemberExists(int id)
-        {
-            return _context.ProfileMembers.Any(e => e.ProfileId == id);
-        }
     }
 }

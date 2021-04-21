@@ -1,5 +1,6 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
+using ArtHub.Models.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,27 +17,25 @@ namespace ArtHub.Data
             _context = context;
         }
 
-
-
-        public async Task CreateProfileMember(ProfileMember profileMember)
+        private bool MemberExists(int p, string m)
         {
-            _context.ProfileMembers.Add(profileMember);
-            await _context.SaveChangesAsync();
+            return _context.ProfileMembers.Any(pm => pm.ProfileId == p && pm.UserId == m);
+        }
+        public async Task<ProfileDto> CreateProfileMember(ProfileMember profileMember)
+        {
+            if (!MemberExists(profileMember.ProfileId, profileMember.UserId))
+                {
+                _context.ProfileMembers.Add(profileMember);
+                await _context.SaveChangesAsync();
+
+                }
+                
+
+            
+            
+            return await new DbProfileRepository(_context).GetProfile(profileMember.ProfileId);
         }
 
-        public Task<ProfileMember> GetProfileMember(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<List<ProfileMember>> GetProfileMembers()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateProfileMember(int id, ProfileMember profileMember)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

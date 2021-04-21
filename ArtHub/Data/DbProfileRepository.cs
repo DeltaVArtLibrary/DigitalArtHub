@@ -26,12 +26,19 @@ namespace ArtHub.Data.Interfaces
                     Description = profile.Description,
                     DisplayName = profile.DisplayName,
                     Id = profile.ProfileId,
+                    Members = profile.ProfileMember.Select(p => new ProfileMemberDto
+                    {
+                        Username = p.User.UserName,
+                        UserId = p.UserId,
+                    }).ToList()
                 })
                 .FirstOrDefaultAsync(p => p.Id == Id);
         }
 
         public async Task<List<Profile>> GetProfiles()
         {
+
+            // may change to use Dto
             return await _context.Profiles.ToListAsync();
         }
 
