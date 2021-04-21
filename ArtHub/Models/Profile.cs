@@ -16,5 +16,11 @@ namespace ArtHub.Models
 
         [StringLength(1500)]
         public string Description { get; set; }
+
+        // Navigation Properties
+
+        public Art Art { get; set; }
+        public Collection Collection { get; set; }
+        public ProfileMember ProfileMember { get; set; }
     }
 }

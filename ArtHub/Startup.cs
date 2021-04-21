@@ -54,6 +54,8 @@ namespace ArtHub
 
             services.AddTransient<IArtRepository, DbArtRepository>();
 
+            services.AddTransient<IProfileRepository, DbProfileRepository>();
+
             services.AddTransient<JwtTokenService>();
             services.AddAuthorization();
 
@@ -68,8 +70,6 @@ namespace ArtHub
                 {
                     options.TokenValidationParameters = JwtTokenService.GetValidationParamters(Configuration);
                 });
-
-
 
 
             services.AddSwaggerGen(options =>
