@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ArtHub.Data.Interfaces
 {
-    internal interface IProfileRepository
+    public interface IProfileRepository
     {
         
         Task<IEnumerable<Profile>> GetProfiles();

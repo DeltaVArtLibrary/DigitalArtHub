@@ -1,7 +1,9 @@
 ﻿using ArtHub.Models;
+using ArtHub.Models.Api;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ArtHub.Data.Interfaces
@@ -13,17 +15,23 @@ namespace ArtHub.Data.Interfaces
 
         public DbProfileRepository(ArtHubDbContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
-        public Task<Profile> GetProfile(int Id)
+        public async Task<Profile> GetProfile(int Id)
         {
-            throw new NotImplementedException();
+            return await _context.Profiles
+                .Select(profile => new ProfileDto
+                {
+                    Description = profile.Description,
+                    DisplayName = profile.DisplayName,
+                    Id = profile.Id,
+                });
         }
 
-        public Task<IEnumerable<Profile>> GetProfiles()
+        public async Task<IEnumerable<Profile>> GetProfiles()
         {
-            throw new NotImplementedException();
+            return await _context.Profiles.ToListAsync();
         }
 
         public async Task CreateProfile(Profile profile)

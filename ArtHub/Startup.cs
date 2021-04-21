@@ -59,8 +59,17 @@ namespace ArtHub
             services.AddTransient<JwtTokenService>();
             services.AddAuthorization();
 
-
-
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = JwtTokenService.GetValidationParamters(Configuration);
+                });
 
 
             services.AddSwaggerGen(options =>
