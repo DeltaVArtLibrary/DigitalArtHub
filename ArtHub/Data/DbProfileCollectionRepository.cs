@@ -17,9 +17,14 @@ namespace ArtHub.Data
             _context = context;
         }
 
-        public Task CreateCollection(int profileId, CreateCollection collection)
+        public async Task CreateCollection(int profileId, CreateCollection collection)
         {
-            throw new NotImplementedException();
+            Collection newCollection = new Collection {
+                Title = collection.Title,
+                ProfileId = profileId
+            };
+            _context.Collections.Add(newCollection);
+            await _context.SaveChangesAsync();
         }
 
         public Task<IEnumerable<CollectionDto>> GetAllProfileCollections(int profileId)
