@@ -19,8 +19,8 @@ namespace ArtHub.Models
 
         // Navigation Properties
 
-        public Art Art { get; set; }
-        public Collection Collection { get; set; }
-        public ProfileMember ProfileMember { get; set; }
+        public List<Art> Art { get; set; }
+        public List<Collection> Collection { get; set; }
+        public List<ProfileMember> ProfileMember { get; set; }
     }
 }
