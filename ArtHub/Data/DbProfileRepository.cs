@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ArtHub.Data.Interfaces
 {
-    class DbProfileRepository : IProfileRepository
+    public class DbProfileRepository : IProfileRepository
     {
 
         private readonly ArtHubDbContext _context;
