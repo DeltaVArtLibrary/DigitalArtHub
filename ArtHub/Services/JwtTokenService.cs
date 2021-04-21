@@ -48,18 +48,19 @@ namespace ArtHub.Services
             return new SymmetricSecurityKey(secretBytes);
         }
 
-        /*internal static TokenValidationParameters GetValidationParameters(IConfiguration configuration)
+        // token validation 
+        public static TokenValidationParameters GetValidationParamters(IConfiguration configuration)
         {
             return new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = GetSecurityKey(configuration),
-
-                // simplify testing
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = true,
             };
-        }*/
+        }
+
+       
     }
 }

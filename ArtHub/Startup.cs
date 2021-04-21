@@ -16,6 +16,8 @@ using ArtHub.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using ArtHub.Services;
 using ArtHub.Data.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtHub
 {
@@ -55,8 +57,10 @@ namespace ArtHub
             services.AddTransient<IProfileRepository, DbProfileRepository>();
 
             services.AddTransient<JwtTokenService>();
+            services.AddAuthorization();
 
-            
+
+
 
 
             services.AddSwaggerGen(options =>
@@ -67,6 +71,15 @@ namespace ArtHub
                     Title = "Digital ArtHub",
                     Version = "v1",
                 });
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer,"
+                });
+                options.OperationFilter<AuthenticationRequirementOperationFilter>();
+
             });
 
            
@@ -99,6 +112,9 @@ namespace ArtHub
 
 
             app.UseRouting();
+            // add in Authentication and Authorization
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -110,5 +126,31 @@ namespace ArtHub
                 });
             });
         }
+
+        private class AuthenticationRequirementOperationFilter : IOperationFilter
+        {
+            public void Apply(OpenApiOperation operation, OperationFilterContext context)
+            {
+                var hasAnonymous = context.ApiDescription.CustomAttributes().OfType<AllowAnonymousAttribute>().Any();
+                if (hasAnonymous)
+                    return;
+
+                operation.Security ??= new List<OpenApiSecurityRequirement>();
+
+                var scheme = new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme,
+                    },
+                };
+                operation.Security.Add(new OpenApiSecurityRequirement
+                {
+                    [scheme] = new List<string>()
+                });
+            }
+        }
+
     }
 }
