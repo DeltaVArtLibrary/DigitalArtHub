@@ -26,14 +26,14 @@ namespace ArtHub.Data.Interfaces
             throw new NotImplementedException();
         }
 
-        public async Task PostProfile(Profile profile)
+        public async Task CreateProfile(Profile profile)
         {
             _context.Profiles.Add(profile);
             await _context.SaveChangesAsync();
         }
 
 
-        public async Task<bool> PutProfile(Profile profile)
+        public async Task<bool> UpdateProfile(Profile profile)
         {
             _context.Entry(profile).State = EntityState.Modified;
 

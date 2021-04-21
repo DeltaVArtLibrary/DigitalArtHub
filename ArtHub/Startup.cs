@@ -52,9 +52,11 @@ namespace ArtHub
 
             services.AddTransient<IArtRepository, DbArtRepository>();
 
+            services.AddTransient<IProfileRepository, DbProfileRepository>();
+
             services.AddTransient<JwtTokenService>();
 
-
+            
 
 
             services.AddSwaggerGen(options =>

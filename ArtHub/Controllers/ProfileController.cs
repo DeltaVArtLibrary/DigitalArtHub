@@ -43,7 +43,7 @@ namespace ArtHub.Controllers
         // PUT: api/Profile/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")] // Update
-        public async Task<IActionResult> PutProfile(int id, Profile profile)
+        public async Task<IActionResult> UpdateProfile(int id, Profile profile)
         {
             if (id != profile.ProfileId)
             {
@@ -74,7 +74,7 @@ namespace ArtHub.Controllers
         // POST: api/Profile
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost] // Create
-        public async Task<ActionResult<Profile>> PostProfile(Profile profile)
+        public async Task<ActionResult<Profile>> CreateProfile(Profile profile)
         {
             _context.Profiles.Add(profile);
             await _context.SaveChangesAsync();
