@@ -47,7 +47,7 @@ namespace ArtHub.Controllers
         [HttpGet("Self")]
         public async Task<UserDto> Self() 
         {
-            return await userService.GetUser(this.User);
+            return await userService.GetUser(User);
         }
     }
 }
