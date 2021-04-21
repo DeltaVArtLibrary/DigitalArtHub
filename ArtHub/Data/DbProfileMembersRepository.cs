@@ -24,15 +24,11 @@ namespace ArtHub.Data
         public async Task<ProfileDto> CreateProfileMember(ProfileMember profileMember)
         {
             if (!MemberExists(profileMember.ProfileId, profileMember.UserId))
-                {
+            {
                 _context.ProfileMembers.Add(profileMember);
                 await _context.SaveChangesAsync();
+            }
 
-                }
-                
-
-            
-            
             return await new DbProfileRepository(_context).GetProfile(profileMember.ProfileId);
         }
 
