@@ -13,8 +13,5 @@ namespace ArtHub.Data.Interfaces
         Task CreateArt(Art art);
         Task<bool> UpdateArt(int id, Art art);
         Task<bool> DeleteArt(int id);
-
-        //TODO: AddArtToCollection(int id, Art art);
-        // RemoveArtFromCollection(int id, Art art);
     }
 }
