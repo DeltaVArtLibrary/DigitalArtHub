@@ -11,35 +11,33 @@ using ArtHub.Data.Interfaces;
 
 namespace ArtHub.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Profile/{profileId}/Collection")]
     [ApiController]
-    public class CollectionsController : ControllerBase
+    public class ProfileCollectionController : ControllerBase
     {
         private readonly ArtHubDbContext _context;
-        private readonly ICollectionRepository collectionRepository;
+        private readonly IProfileCollectionRepository profileCollectionRepository;
 
-        public CollectionsController(ArtHubDbContext context, ICollectionRepository collectionRepository)
+        public ProfileCollectionController(ArtHubDbContext context, IProfileCollectionRepository profileCollectionRepository)
         {
             _context = context;
-            this.collectionRepository = collectionRepository;
+            this.profileCollectionRepository = profileCollectionRepository;
         }
 
-        // GET: api/Collections
+        // GET: api/Profile/{profileId}/Collection
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Collection>>> GetCollections()
+        public async Task<ActionResult<IEnumerable<Collection>>> GetProfileCollections()
         {
             throw new NotImplementedException();
-
-            return await _context.Collections.ToListAsync();
         }
 
-        // GET: api/Collections/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Collection>> GetCollection(int id)
+        // GET: api/Profile/{profileId}/Collection/{collectionId}
+        [HttpGet("{collectionId}")]
+        public async Task<ActionResult<Collection>> GetCollection(int collectionId)
         {
             throw new NotImplementedException();
 
-            var collection = await _context.Collections.FindAsync(id);
+            var collection = await _context.Collections.FindAsync(collectionId);
 
             if (collection == null)
             {
@@ -49,14 +47,14 @@ namespace ArtHub.Controllers
             return collection;
         }
 
-        // PUT: api/Collections/5
+        // PUT: api/Profile/{profileId}/Collection/{collectionId}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCollection(int id, Collection collection)
+        [HttpPut("{collectionId}")]
+        public async Task<IActionResult> PutCollection(int collectionId, Collection collection)
         {
             throw new NotImplementedException();
 
-            if (id != collection.CollectionId)
+            if (collectionId != collection.CollectionId)
             {
                 return BadRequest();
             }
@@ -69,7 +67,7 @@ namespace ArtHub.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CollectionExists(id))
+                if (!CollectionExists(collectionId))
                 {
                     return NotFound();
                 }
@@ -82,9 +80,9 @@ namespace ArtHub.Controllers
             return NoContent();
         }
 
-        // POST: api/Collections
+        // POST: api/Profile/{profileId}/Collection/{collectionId}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("{collectionId}")]
         public async Task<ActionResult<Collection>> PostCollection(Collection collection)
         {
             throw new NotImplementedException();
@@ -95,13 +93,13 @@ namespace ArtHub.Controllers
             return CreatedAtAction("GetCollection", new { id = collection.CollectionId }, collection);
         }
 
-        // DELETE: api/Collections/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCollection(int id)
+        // DELETE: api/Profile/{profileId}/Collection/{collectionId}
+        [HttpDelete("{collectionId}")]
+        public async Task<IActionResult> DeleteCollection(int collectionId)
         {
             throw new NotImplementedException();
 
-            var collection = await _context.Collections.FindAsync(id);
+            var collection = await _context.Collections.FindAsync(collectionId);
             if (collection == null)
             {
                 return NotFound();
