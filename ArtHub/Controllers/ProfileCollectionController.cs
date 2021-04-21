@@ -48,31 +48,16 @@ namespace ArtHub.Controllers
         // PUT: api/Profile/{profileId}/Collection/{collectionId}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{collectionId}")]
-        public async Task<IActionResult> PutCollection(int collectionId, Collection collection)
+        public async Task<IActionResult> PutCollection(int profileId, int collectionId, Collection collection)
         {
-            throw new NotImplementedException();
-
-            if (collectionId != collection.CollectionId)
+            if (collectionId != collection.CollectionId || profileId != collection.ProfileId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(collection).State = EntityState.Modified;
-
-            try
+            if (!await profileCollectionRepository.UpdateProfileCollection(collection))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CollectionExists(collectionId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -91,7 +76,7 @@ namespace ArtHub.Controllers
         }
 
         // DELETE: api/Profile/{profileId}/Collection/{collectionId}
-        [HttpDelete("{collectionId}")]
+        /*[HttpDelete("{collectionId}")]
         public async Task<IActionResult> DeleteCollection(int collectionId)
         {
             throw new NotImplementedException();
@@ -107,10 +92,11 @@ namespace ArtHub.Controllers
 
             return NoContent();
         }
-
+        
         private bool CollectionExists(int id)
         {
             return _context.Collections.Any(e => e.CollectionId == id);
         }
+        */
     }
 }

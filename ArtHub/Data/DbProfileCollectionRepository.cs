@@ -1,6 +1,7 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
 using ArtHub.Models.Api;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -55,9 +56,34 @@ namespace ArtHub.Data
             return await new DbCollectionRepository(_context).GetCollection(collectionId);
         }
 
-        public Task<bool> UpdateProfileCollection(int profileId, int collectionId)
+        public async Task<bool> UpdateProfileCollection(Collection collection)
         {
-            throw new NotImplementedException();
+            _context.Entry(collection).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+
+                // Save worked
+                return true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CollectionExists(collection.CollectionId))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
+
+        private bool CollectionExists(int collectionId)
+        {
+            return _context.Collections.Any(e => e.CollectionId == collectionId);
         }
     }
 }
