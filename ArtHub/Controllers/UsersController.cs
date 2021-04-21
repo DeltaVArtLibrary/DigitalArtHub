@@ -1,5 +1,6 @@
 ﻿using ArtHub.Models.Api;
 using ArtHub.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -39,6 +40,14 @@ namespace ArtHub.Controllers
                 return Unauthorized();
 
             return user;
+        }
+
+
+        [Authorize]
+        [HttpGet("Self")]
+        public async Task<UserDto> Self() 
+        {
+            return await userService.GetUser(User);
         }
     }
 }
