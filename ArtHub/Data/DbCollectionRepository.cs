@@ -27,10 +27,10 @@ namespace ArtHub.Data
                     ProfileId = collection.ProfileId,
                     Title = collection.Title,
                     Description = collection.Description,
-                    Art = _context.Art.Select(art => new tempArtDto
+                    Art = collection.ArtCollections.Select(art => new tempArtDto
                     {
                         Id = art.ArtId,
-                        Title = art.Title
+                        Title = art.Art.Title
                     }).ToList()
                 })
                 .ToListAsync();

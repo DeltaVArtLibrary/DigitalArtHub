@@ -1,6 +1,7 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
 using ArtHub.Models.Api;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +30,43 @@ namespace ArtHub.Data
             return newCollection;
         }
 
-        public Task<IEnumerable<CollectionDto>> GetAllProfileCollections(int profileId)
+        public async Task<IEnumerable<CollectionDto>> GetAllProfileCollections(int profileId)
         {
-            throw new NotImplementedException();
+            return await _context.Collections
+                .Select(collection => new CollectionDto
+                {
+                    CollectionId = collection.CollectionId,
+                    ProfileId = collection.ProfileId,
+                    Title = collection.Title,
+                    Description = collection.Description,
+                    Art = collection.ArtCollections.Select(a => new tempArtDto
+                    {
+                        Id = a.ArtId,
+                        Title = a.Art.Title
+                    }).ToList()
+                })
+                .Where(c => c.ProfileId == profileId)
+                .ToListAsync();
+
         }
 
-        public Task<CollectionDto> GetProfileCollection(int profileId, int collectionId)
+        public async Task<CollectionDto> GetProfileCollection(int profileId, int collectionId)
         {
-            throw new NotImplementedException();
+            return await _context.Collections
+                .Select(collection => new CollectionDto
+                {
+                    CollectionId = collection.CollectionId,
+                    ProfileId = collection.ProfileId,
+                    Title = collection.Title,
+                    Description = collection.Description,
+                    Art = collection.ArtCollections.Select(a => new tempArtDto
+                    {
+                        Id = a.ArtId,
+                        Title = a.Art.Title
+                    }).ToList()
+                })
+                .Where(c => c.ProfileId == profileId)
+                .FirstOrDefaultAsync();
         }
 
         public Task<bool> UpdateProfileCollection(int profileId, int collectionId)
