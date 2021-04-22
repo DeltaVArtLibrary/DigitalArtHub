@@ -87,7 +87,7 @@ namespace ArtHub.Controllers
         // POST: api/Profile
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost] // Post means create
-        public async Task<ActionResult<Profile>> CreateProfile(Profile profile)
+        public async Task<ActionResult<Profile>> CreateProfile(CreateProfileDto profile)
         {
             /*_context.Profiles.Add(profile);
             await _context.SaveChangesAsync();*/
