@@ -89,10 +89,12 @@ namespace ArtHub.Controllers
         [HttpPost] // Post means create
         public async Task<ActionResult<Profile>> CreateProfile(Profile profile)
         {
-            _context.Profiles.Add(profile);
-            await _context.SaveChangesAsync();
+            /*_context.Profiles.Add(profile);
+            await _context.SaveChangesAsync();*/
+            var profileDto = await profileRepository.CreateProfile(profile);
 
-            return CreatedAtAction("GetProfile", new { Id = profile.ProfileId }, profile);
+
+            return CreatedAtAction("GetProfile", new { Id = profileDto.Id }, profileDto);
         }
 
 
