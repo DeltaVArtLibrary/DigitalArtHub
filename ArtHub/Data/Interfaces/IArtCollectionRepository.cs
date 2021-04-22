@@ -5,6 +5,6 @@ namespace ArtHub.Data.Interfaces
 {
     public interface IArtCollectionRepository
     {
-        Task<bool> AddToCollection(ArtCollection artCollection);
+        Task<bool> AddToCollection(AddToArtCollection artCollection);
     }
 }

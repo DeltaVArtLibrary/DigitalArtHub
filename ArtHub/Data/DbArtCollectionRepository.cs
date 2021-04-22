@@ -16,19 +16,24 @@ namespace ArtHub.Data
             _context = context;
         }
 
-        public async Task<bool> AddToCollection(ArtCollection artCollection)
+        public async Task<bool> AddToCollection(AddToArtCollection artCollection)
         {
             if (ArtCollectionExists(artCollection) || ArtAndCollectionExist(artCollection))
                 return false;
-            _context.ArtCollections.Add(artCollection);
+            ArtCollection newAddition = new ArtCollection
+            {
+                ArtId = artCollection.ArtId,
+                CollectionId = artCollection.CollectionId
+            };
+            _context.ArtCollections.Add(newAddition);
             await _context.SaveChangesAsync();
             return true;
         }
-        private bool ArtCollectionExists(ArtCollection artCollection)
+        private bool ArtCollectionExists(AddToArtCollection artCollection)
         {
             return _context.ArtCollections.Any(ac => ac.ArtId == artCollection.ArtId && ac.CollectionId == artCollection.CollectionId);
         }
-        private bool ArtAndCollectionExist(ArtCollection artCollection)
+        private bool ArtAndCollectionExist(AddToArtCollection artCollection)
         {
             bool artExists = _context.Art.Any(a => a.ArtId == artCollection.ArtId);
             bool collectionExists = _context.Collections.Any(c => c.CollectionId == artCollection.CollectionId);

@@ -23,7 +23,7 @@ namespace ArtHub.Controllers
         }
         // POST api/Profile/{profileId}/Collection/{collectionId}
         [HttpPost]
-        public async Task<ActionResult> AddToCollection(int profileId, int collectionId, [FromBody] ArtCollection artCollection)
+        public async Task<ActionResult> AddToCollection(int profileId, int collectionId, [FromBody] AddToArtCollection artCollection)
         {
             if (!profileCollectionRepository.CollectionExistsForProfile(profileId, collectionId))
                 return BadRequest();
