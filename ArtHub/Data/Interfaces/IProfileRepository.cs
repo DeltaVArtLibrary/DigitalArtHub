@@ -10,7 +10,7 @@ namespace ArtHub.Data.Interfaces
         
         Task<List<Profile>> GetProfiles();
         Task<ProfileDto> GetProfile(int Id);
-        Task CreateProfile(Profile profile); // Post means to Create
+        Task<ProfileDto> CreateProfile(Profile profile); // Post means to Create
         Task<bool> UpdateProfile(Profile Profile); // Put means to Update
 
     }
