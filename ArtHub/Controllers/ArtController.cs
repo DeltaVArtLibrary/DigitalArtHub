@@ -44,46 +44,5 @@ namespace ArtHub.Controllers
 
             return art;
         }
-
-        // PUT: api/Arts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateArt(int id, CreateArtData art)
-        {
-            if (id != art.ArtId) 
-            {
-                return BadRequest();
-            }
-
-            if (!await artRepository.UpdateArt(id, art))
-            {
-                return NotFound();
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Arts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Art>> CreateArt(CreateArtData art)
-        {
-            var newArt = await artRepository.CreateArt(art);
-            
-
-            return CreatedAtAction("GetArt", new { id = newArt.ArtId }, newArt);
-        }
-
-        // DELETE: api/Arts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteArt(int id)
-        { 
-            if (!await artRepository.DeleteArt(id))
-            {
-                return NotFound();
-            }
-
-            return NoContent();
-        }        
     }
 }

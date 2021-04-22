@@ -66,11 +66,11 @@ namespace ArtHub.Data
             return await GetArt(newArt.ArtId);
         }
 
-        public async Task<bool> UpdateArt(int id, CreateArtData art)
+        public async Task<bool> UpdateArt(CreateArtData art)
         {
             Art newArt = new Art
             {
-                ArtId = id,
+                ArtId = art.ArtId,
                 ProfileId = art.ProfileId,
                 Title = art.Title,
                 Content = art.Content,
@@ -84,7 +84,7 @@ namespace ArtHub.Data
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ArtExists(id))
+                if (!ArtExists(art.ArtId))
                 {
                     return false;
                 }
