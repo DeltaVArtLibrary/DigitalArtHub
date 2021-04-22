@@ -31,4 +31,11 @@ namespace ArtHub.Models
         public string Title { get; set; }
         public int ProfileId { get; set; }
     }
+    public class UpdateCollection
+    {
+        public int ProfileId { get; set; }
+        public int CollectionId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+    }
 }

@@ -56,7 +56,7 @@ namespace ArtHub.Data
             return await new DbCollectionRepository(_context).GetCollection(collectionId);
         }
 
-        public async Task<bool> UpdateProfileCollection(Collection collection)
+        public async Task<bool> UpdateProfileCollection(UpdateCollection collection)
         {
             _context.Entry(collection).State = EntityState.Modified;
 

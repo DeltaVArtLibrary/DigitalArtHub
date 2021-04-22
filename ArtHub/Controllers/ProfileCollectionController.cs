@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ArtHub.Data;
 using ArtHub.Models;
 using ArtHub.Data.Interfaces;
+using ArtHub.Models.Api;
 
 namespace ArtHub.Controllers
 {
@@ -26,14 +27,14 @@ namespace ArtHub.Controllers
 
         // GET: api/Profile/{profileId}/Collection
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Collection>>> GetProfileCollections(int profileId)
+        public async Task<ActionResult<IEnumerable<CollectionDto>>> GetProfileCollections(int profileId)
         {
             return Ok(await profileCollectionRepository.GetAllProfileCollections(profileId));
         }
 
         // GET: api/Profile/{profileId}/Collection/{collectionId}
         [HttpGet("{collectionId}")]
-        public async Task<ActionResult<Collection>> GetCollection(int collectionId)
+        public async Task<ActionResult<CollectionDto>> GetCollection(int collectionId)
         {
             var collection = await profileCollectionRepository.GetProfileCollection(collectionId);
 
@@ -48,7 +49,7 @@ namespace ArtHub.Controllers
         // PUT: api/Profile/{profileId}/Collection/{collectionId}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{collectionId}")]
-        public async Task<IActionResult> PutCollection(int profileId, int collectionId, Collection collection)
+        public async Task<IActionResult> PutCollection(int profileId, int collectionId, UpdateCollection collection)
         {
             if (collectionId != collection.CollectionId || profileId != collection.ProfileId)
             {
@@ -66,7 +67,7 @@ namespace ArtHub.Controllers
         // POST: api/Profile/{profileId}/Collection
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Collection>> PostCollection(int profileId, [FromBody] CreateCollection collection)
+        public async Task<ActionResult<CollectionDto>> PostCollection(int profileId, [FromBody] CreateCollection collection)
         {
             if (profileId != collection.ProfileId)
                 return BadRequest();
