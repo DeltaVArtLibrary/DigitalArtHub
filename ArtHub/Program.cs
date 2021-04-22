@@ -17,13 +17,13 @@ namespace ArtHub
         public static void Main(string[] args)
         {
             // add code to update DB using configureDbContext
-            /*CreateHostBuilder(args).Build().Run();*/
 
             var host = CreateHostBuilder(args).Build();
             UpdateDatabase(host.Services);
             host.Run();
         }
 
+        // code to update Db. Using is an override
         private static void UpdateDatabase(IServiceProvider services)
         {
             using (var serviceScope = services.CreateScope())
