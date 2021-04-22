@@ -14,6 +14,8 @@ namespace ArtHub.Data.Interfaces
         Task<CollectionDto> GetProfileCollection(int collectionId);
         Task<bool> UpdateProfileCollection(UpdateCollection update);
         bool CollectionExistsForProfile(int profileId, int collectionId);
+        Task<bool> AddToCollection(AddToArtCollection artCollection);
+
 
     }
 }

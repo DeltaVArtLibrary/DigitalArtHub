@@ -76,6 +76,19 @@ namespace ArtHub.Controllers
             return CreatedAtAction("GetCollection", new { profileId = newCollection.ProfileId, collectionId = newCollection.CollectionId }, newCollection);
         }
 
+        // POST api/Profile/{profileId}/Collection/{collectionId}
+        [HttpPost("{collectionId}")]
+        public async Task<ActionResult> AddToCollection(int profileId, int collectionId, [FromBody] AddToArtCollection artCollection)
+        {
+            if (!profileCollectionRepository.CollectionExistsForProfile(profileId, collectionId))
+                return BadRequest();
+            if (collectionId != artCollection.CollectionId)
+                return BadRequest();
+            if (!await profileCollectionRepository.AddToCollection(artCollection))
+                return BadRequest();
+            return NoContent();
+        }
+
         // DELETE: api/Profile/{profileId}/Collection/{collectionId}
         /*[HttpDelete("{collectionId}")]
         public async Task<IActionResult> DeleteCollection(int collectionId)
