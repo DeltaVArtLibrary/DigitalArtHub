@@ -15,4 +15,9 @@ namespace ArtHub.Models
         public Collection Collection { get; set; }
         public Art Art { get; set; }
     }
+    public class AddToArtCollection
+    {
+        public int ArtId { get; set; }
+        public int CollectionId { get; set; }
+    }
 }

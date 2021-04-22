@@ -56,7 +56,7 @@ namespace ArtHub.Data
             return await new DbCollectionRepository(_context).GetCollection(collectionId);
         }
 
-        public async Task<bool> UpdateProfileCollection(Collection collection)
+        public async Task<bool> UpdateProfileCollection(UpdateCollection collection)
         {
             _context.Entry(collection).State = EntityState.Modified;
 
@@ -83,7 +83,11 @@ namespace ArtHub.Data
 
         private bool CollectionExists(int collectionId)
         {
-            return _context.Collections.Any(e => e.CollectionId == collectionId);
+            return _context.Collections.Any(c => c.CollectionId == collectionId);
+        }
+        public bool CollectionExistsForProfile(int profileId, int collectionId)
+        {
+            return _context.Collections.Any(c => c.ProfileId == profileId && c.CollectionId == collectionId);
         }
     }
 }
