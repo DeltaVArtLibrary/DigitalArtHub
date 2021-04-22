@@ -95,10 +95,10 @@ namespace ArtHub.Data
             }            
         }
 
-        public async Task<bool> DeleteArt(int id)
+        public async Task<bool> DeleteArt(int profileId, int artId)
         {            
-            Art art = await _context.Art.FindAsync(id); 
-            if (art == null)
+            Art art = await _context.Art.FindAsync(artId); 
+            if (art == null || art.ProfileId != profileId)
             {
                 return false;
             }

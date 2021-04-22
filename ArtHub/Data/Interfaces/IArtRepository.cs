@@ -13,6 +13,6 @@ namespace ArtHub.Data.Interfaces
         Task<ArtDto> GetArt(int id);
         Task<ArtDto> CreateArt(CreateArtData art);
         Task<bool> UpdateArt(CreateArtData art);
-        Task<bool> DeleteArt(int id);
+        Task<bool> DeleteArt(int proflieId, int artId);
     }
 }

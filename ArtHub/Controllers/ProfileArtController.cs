@@ -40,8 +40,13 @@ namespace ArtHub.Controllers
         // POST: api/Arts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Art>> CreateArt(CreateArtData art)
+        public async Task<ActionResult<Art>> CreateArt(int profileId, CreateArtData art)
         {
+            if (profileId != art.ProfileId)
+            {
+                return BadRequest();
+            }
+
             var newArt = await artRepository.CreateArt(art);
 
 
@@ -49,10 +54,10 @@ namespace ArtHub.Controllers
         }
 
         // DELETE: api/Arts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteArt(int id)
+        [HttpDelete("{artId}")]
+        public async Task<IActionResult> DeleteArt(int profileId, int artId)
         {
-            if (!await artRepository.DeleteArt(id))
+            if (!await artRepository.DeleteArt(profileId, artId))
             {
                 return NotFound();
             }
