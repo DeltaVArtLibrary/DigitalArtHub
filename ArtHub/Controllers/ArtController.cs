@@ -10,9 +10,11 @@ using ArtHub.Models;
 using ArtHub.Data.Interfaces;
 using ArtHub.Models.Api;
 using static ArtHub.Models.Api.AllArtDto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtHub.Controllers 
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class ArtController : ControllerBase

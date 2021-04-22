@@ -59,6 +59,7 @@ namespace ArtHub.Data
                 ProfileId = art.ProfileId,
                 Title = art.Title,
                 Content = art.Content,
+                UploadDate = DateTime.Now,
                 Description = art.Description
             };
             _context.Art.Add(newArt);
