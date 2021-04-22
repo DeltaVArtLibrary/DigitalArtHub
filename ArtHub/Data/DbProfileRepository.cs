@@ -47,6 +47,8 @@ namespace ArtHub.Data.Interfaces
         {
             _context.Profiles.Add(profile);
             await _context.SaveChangesAsync();
+
+            return await GetProfile(profile.ProfileId);
         }
 
 
