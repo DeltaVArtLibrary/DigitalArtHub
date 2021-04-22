@@ -9,9 +9,11 @@ using ArtHub.Data;
 using ArtHub.Models;
 using ArtHub.Data.Interfaces;
 using ArtHub.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtHub.Controllers
 {
+    [Authorize]
     [Route("api/Profile/{profileId}/Collection")]
     [ApiController]
     public class ProfileCollectionController : ControllerBase
