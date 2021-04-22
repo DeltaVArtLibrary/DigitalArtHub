@@ -27,10 +27,13 @@ namespace ArtHub.Data
                     ProfileId = collection.ProfileId,
                     Title = collection.Title,
                     Description = collection.Description,
-                    Art = collection.ArtCollections.Select(art => new tempArtDto
+                    Art = collection.ArtCollections.Select(art => new AllArtDto
                     {
-                        Id = art.ArtId,
-                        Title = art.Art.Title
+                        ArtId = art.ArtId,
+                        Title = art.Art.Title,
+                        Description = art.Art.Description,
+                        ProfileId = art.Art.ProfileId,
+                        ProfileDisplayName = art.Art.Profile.DisplayName
                     }).ToList()
                 })
                 .ToListAsync();
@@ -45,10 +48,13 @@ namespace ArtHub.Data
                     ProfileId = collection.ProfileId,
                     Title = collection.Title,
                     Description = collection.Description,
-                    Art = collection.ArtCollections.Select(a => new tempArtDto
+                    Art = collection.ArtCollections.Select(art => new AllArtDto
                     {
-                        Id = a.ArtId,
-                        Title = a.Art.Title
+                        ArtId = art.ArtId,
+                        Title = art.Art.Title,
+                        Description = art.Art.Description,
+                        ProfileId = art.Art.ProfileId,
+                        ProfileDisplayName = art.Art.Profile.DisplayName
                     }).ToList()
                 })
                 .Where(c => c.CollectionId == collectionId)
