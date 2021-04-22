@@ -11,11 +11,6 @@ namespace ArtHub.Models.Api
         public int ProfileId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public List<tempArtDto> Art { get; set; } // swap out for actual Art Dto before merge to main
-    }
-    public class tempArtDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
+        public List<AllArtDto> Art { get; set; } // swap out for actual Art Dto before merge to main
     }
 }
