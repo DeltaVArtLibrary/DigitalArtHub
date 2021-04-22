@@ -7,6 +7,7 @@ using ArtHub.Data;
 using ArtHub.Models;
 using ArtHub.Data.Interfaces;
 using ArtHub.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtHub.Controllers
 {
@@ -46,6 +47,7 @@ namespace ArtHub.Controllers
 
         // PUT: api/Profile/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{profileId}")] // Put Update
         public async Task<IActionResult> UpdateProfile(int profileId, CreateProfileDto profile)
         {
@@ -61,8 +63,11 @@ namespace ArtHub.Controllers
             return NoContent();
         }
 
+
+
         // POST: api/Profile
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost] // Post means create
         public async Task<ActionResult<Profile>> CreateProfile(CreateProfileDto profile)
         {
