@@ -27,7 +27,6 @@ namespace ArtHub.Data
             };
             _context.Collections.Add(newCollection);
             await _context.SaveChangesAsync();
-
             return newCollection;
         }
 
@@ -49,11 +48,6 @@ namespace ArtHub.Data
                 .Where(c => c.ProfileId == profileId)
                 .ToListAsync();
 
-        }
-
-        public async Task<CollectionDto> GetProfileCollection(int collectionId)
-        {
-            return await new DbCollectionRepository(_context).GetCollection(collectionId);
         }
 
         public async Task<bool> UpdateProfileCollection(UpdateCollection collection)
@@ -79,6 +73,29 @@ namespace ArtHub.Data
                 }
             }
 
+        }
+        public async Task<bool> AddToCollection(AddToArtCollection artCollection)
+        {
+            if (ArtCollectionExists(artCollection) || ArtAndCollectionExist(artCollection))
+                return false;
+            ArtCollection newAddition = new ArtCollection
+            {
+                ArtId = artCollection.ArtId,
+                CollectionId = artCollection.CollectionId
+            };
+            _context.ArtCollections.Add(newAddition);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        private bool ArtCollectionExists(AddToArtCollection artCollection)
+        {
+            return _context.ArtCollections.Any(ac => ac.ArtId == artCollection.ArtId && ac.CollectionId == artCollection.CollectionId);
+        }
+        private bool ArtAndCollectionExist(AddToArtCollection artCollection)
+        {
+            bool artExists = _context.Art.Any(a => a.ArtId == artCollection.ArtId);
+            bool collectionExists = _context.Collections.Any(c => c.CollectionId == artCollection.CollectionId);
+            return artExists && collectionExists;
         }
 
         private bool CollectionExists(int collectionId)
