@@ -1,5 +1,6 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
+using ArtHub.Models.Api;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,38 @@ namespace ArtHub.Data
             _context = context;
         }
 
-        public Task<IEnumerable<Art>> GetAllArt()
+        public async Task<List<AllArtDto>> GetAllArt()
         {
-            throw new NotImplementedException();
-        }
+            return await _context.Art
+                .Select(art => new AllArtDto
+                {
+                    ArtId = art.ArtId,
+                    Title = art.Title,
+                    Description = art.Description,
 
-        public async Task<Art> GetArt(int id)
+                    ProfileId = art.ProfileId,
+                    ProfileDisplayName = art.Profile.DisplayName,
+                })
+            .ToListAsync();
+        }
+        
+        public async Task<ArtDto> GetArt(int id)
         {
-            return await _context.Art.FindAsync(id);            
+            return await _context.Art
+                .Select(art => new ArtDto
+                {
+                    ArtId = art.ArtId,
+                    Title = art.Title,
+                    Description = art.Description,
+                    Content = art.Content,
+                    UploadDate = art.UploadDate,
+
+                    ProfileId = art.ProfileId,
+                    ProfileDisplayName = art.Profile.DisplayName,
+                })
+
+            .FirstOrDefaultAsync(a => a.ArtId == id);
+            
         }
 
         public async Task CreateArt(Art art)
@@ -55,23 +80,21 @@ namespace ArtHub.Data
         }
 
         public async Task<bool> DeleteArt(int id)
-        {
-            Art art = await GetArt(id);
+        {            
+            Art art = await _context.Art.FindAsync(id); 
             if (art == null)
             {
                 return false;
             }
-            _context.Entry(art).State = EntityState.Deleted;
+            _context.Remove(art);
             await _context.SaveChangesAsync();
             return true;
-            //throw new NotImplementedException();
         }
 
         private bool ArtExists(int id)
         {
             return _context.Art.Any(e => e.ArtId == id);
         }
-
     }
 }
 
