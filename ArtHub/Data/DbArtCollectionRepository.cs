@@ -18,7 +18,7 @@ namespace ArtHub.Data
 
         public async Task<bool> AddToCollection(ArtCollection artCollection)
         {
-            if (ArtCollectionExists(artCollection))
+            if (ArtCollectionExists(artCollection) || ArtAndCollectionExist(artCollection))
                 return false;
             _context.ArtCollections.Add(artCollection);
             await _context.SaveChangesAsync();
@@ -27,6 +27,12 @@ namespace ArtHub.Data
         private bool ArtCollectionExists(ArtCollection artCollection)
         {
             return _context.ArtCollections.Any(ac => ac.ArtId == artCollection.ArtId && ac.CollectionId == artCollection.CollectionId);
+        }
+        private bool ArtAndCollectionExist(ArtCollection artCollection)
+        {
+            bool artExists = _context.Art.Any(a => a.ArtId == artCollection.ArtId);
+            bool collectionExists = _context.Collections.Any(c => c.CollectionId == artCollection.CollectionId);
+            return artExists && collectionExists;
         }
     }
 }

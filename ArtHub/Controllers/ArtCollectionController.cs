@@ -25,11 +25,11 @@ namespace ArtHub.Controllers
         [HttpPost]
         public async Task<ActionResult> AddToCollection(int profileId, int collectionId, [FromBody] ArtCollection artCollection)
         {
-            if (!profileCollectionRepository.ValidateCollection(profileId, collectionId))
+            if (!profileCollectionRepository.CollectionExistsForProfile(profileId, collectionId))
                 return BadRequest();
             if (collectionId != artCollection.CollectionId)
                 return BadRequest();
-            if (await artCollectionRepository.AddToCollection(artCollection))
+            if (!await artCollectionRepository.AddToCollection(artCollection))
                 return BadRequest();
             return NoContent();
         }

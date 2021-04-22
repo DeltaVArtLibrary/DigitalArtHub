@@ -85,7 +85,7 @@ namespace ArtHub.Data
         {
             return _context.Collections.Any(c => c.CollectionId == collectionId);
         }
-        public bool ValidateCollection(int profileId, int collectionId)
+        public bool CollectionExistsForProfile(int profileId, int collectionId)
         {
             return _context.Collections.Any(c => c.ProfileId == profileId && c.CollectionId == collectionId);
         }
