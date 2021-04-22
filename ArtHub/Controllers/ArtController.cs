@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using ArtHub.Data;
 using ArtHub.Models;
 using ArtHub.Data.Interfaces;
+using ArtHub.Models.Api;
+using static ArtHub.Models.Api.AllArtDto;
 
 namespace ArtHub.Controllers 
 {
@@ -15,33 +17,29 @@ namespace ArtHub.Controllers
     [ApiController]
     public class ArtController : ControllerBase
     {
-        private readonly ArtHubDbContext _context;
         private readonly IArtRepository artRepository;
 
-        public ArtController(ArtHubDbContext context, IArtRepository artRepository)
+        public ArtController(IArtRepository artRepository)
         {
-            _context = context;
             this.artRepository = artRepository;
         }
 
         // GET: api/Art
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Art>>> GetAllArt()
+        public async Task<ActionResult<List<AllArtDto>>> GetAllArt()
         {
             var art = await artRepository.GetAllArt(); 
-            return await _context.Art.ToListAsync();
+            return Ok(art);
         }
 
         // GET: api/Art/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Art>> GetArt(int id)
+        public async Task<ActionResult<ArtDto>> GetArt(int id)
         {
             var art = await artRepository.GetArt(id);
-            //var art = await _context.Art.FindAsync(id);
-
             if (art == null)
             {
-                return NotFound();
+                return NotFound();  //Implicit conversion to ActionResult<Art>
             }
 
             return art;
@@ -52,27 +50,14 @@ namespace ArtHub.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateArt(int id, Art art)
         {
-            if (id != art.ArtId)
+            if (id != art.ArtId) 
             {
                 return BadRequest();
             }
 
-            _context.Entry(art).State = EntityState.Modified;
-
-            try
+            if (!await artRepository.UpdateArt(id, art));
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ArtExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -83,8 +68,7 @@ namespace ArtHub.Controllers
         [HttpPost]
         public async Task<ActionResult<Art>> CreateArt(Art art)
         {
-            _context.Art.Add(art);
-            await _context.SaveChangesAsync();
+            await artRepository.CreateArt(art);
 
             return CreatedAtAction("GetArt", new { id = art.ArtId }, art);
         }
@@ -92,23 +76,13 @@ namespace ArtHub.Controllers
         // DELETE: api/Arts/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArt(int id)
-        {
-            var art = await _context.Art.FindAsync(id);
-            if (art == null)
+        { 
+            if (!await artRepository.DeleteArt(id));
             {
                 return NotFound();
             }
 
-            _context.Art.Remove(art);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool ArtExists(int id)
-        {
-            return _context.Art.Any(e => e.ArtId == id);
-        }
-
+        }        
     }
 }

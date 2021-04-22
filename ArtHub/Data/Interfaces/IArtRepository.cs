@@ -1,4 +1,5 @@
 ﻿using ArtHub.Models;
+using ArtHub.Models.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ namespace ArtHub.Data.Interfaces
 {
     public interface IArtRepository
     {
-        Task<IEnumerable<Art>> GetAllArt();
-        Task<Art> GetArt(int id);
+        Task<List<AllArtDto>> GetAllArt();
+        Task<ArtDto> GetArt(int id);
         Task CreateArt(Art art);
         Task<bool> UpdateArt(int id, Art art);
         Task<bool> DeleteArt(int id);
