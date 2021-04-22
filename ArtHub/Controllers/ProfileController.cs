@@ -25,25 +25,16 @@ namespace ArtHub.Controllers
 
         // GET: api/Profile
         [HttpGet] // Read from database
-        public async Task<ActionResult<IEnumerable<Profile>>> GetProfiles()
+        public async Task<ActionResult<IEnumerable<ProfileDto>>> GetProfiles()
         {
-            return await _context.Profiles
-                .Include(p => p.ProfileId)
-                .Include(e => e.DisplayName)
-                .Include(a => a.Description)
-                .ToListAsync();
+            return Ok(await profileRepository.GetProfiles());
         }
 
         // GET: api/Profile/5
-        [HttpGet("{id}")] // Read
-        public async Task<ActionResult<Profile>> GetProfile(int id)
+        [HttpGet("{ProfileId}")] // Read
+        public async Task<ActionResult<ProfileDto>> GetProfile(int ProfileId)
         {
-            var profile = await _context.Profiles
-                .Include(p => p.ProfileId)
-                .Include(e => e.DisplayName)
-                .Include(a => a.Description)
-
-            .FirstOrDefaultAsync(p => p.ProfileId == id);
+            var profile = await profileRepository.GetProfile(ProfileId);
 
             if (profile == null)
             {
@@ -55,30 +46,16 @@ namespace ArtHub.Controllers
 
         // PUT: api/Profile/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")] // Put Update
-        public async Task<IActionResult> UpdateProfile(int id, Profile profile)
+        [HttpPut("{profileId}")] // Put Update
+        public async Task<IActionResult> UpdateProfile(int profileId, CreateProfileDto profile)
         {
-            if (id != profile.ProfileId)
+            if (profileId != profile.ProfileId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(profile).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProfileExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+            if (!await profileRepository.UpdateProfile(profile))
+            { 
+                return NotFound();
             }
 
             return NoContent();
@@ -115,9 +92,5 @@ namespace ArtHub.Controllers
             return NoContent();
         }
         */
-        private bool ProfileExists(int id)
-        {
-            return _context.Profiles.Any(e => e.ProfileId == id);
-        }
     }
 }
