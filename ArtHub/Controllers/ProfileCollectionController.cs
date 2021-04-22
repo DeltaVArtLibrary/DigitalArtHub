@@ -92,28 +92,5 @@ namespace ArtHub.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Profile/{profileId}/Collection/{collectionId}
-        /*[HttpDelete("{collectionId}")]
-        public async Task<IActionResult> DeleteCollection(int collectionId)
-        {
-            throw new NotImplementedException();
-
-            var collection = await _context.Collections.FindAsync(collectionId);
-            if (collection == null)
-            {
-                return NotFound();
-            }
-
-            _context.Collections.Remove(collection);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-        
-        private bool CollectionExists(int id)
-        {
-            return _context.Collections.Any(e => e.CollectionId == id);
-        }
-        */
     }
 }
