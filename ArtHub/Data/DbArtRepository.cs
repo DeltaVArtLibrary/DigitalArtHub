@@ -22,7 +22,7 @@ namespace ArtHub.Data
             throw new NotImplementedException();
         }
 
-        public async Task<Art> GetArt(int id)
+        public async Task<Art> GetArtPiece(int id)
         {
             return await _context.Art.FindAsync(id);            
         }
@@ -56,7 +56,7 @@ namespace ArtHub.Data
 
         public async Task<bool> DeleteArt(int id)
         {
-            Art art = await GetArt(id);
+            Art art = await GetArtPiece(id);
             if (art == null)
             {
                 return false;
@@ -64,7 +64,6 @@ namespace ArtHub.Data
             _context.Entry(art).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
             return true;
-            //throw new NotImplementedException();
         }
 
         private bool ArtExists(int id)
