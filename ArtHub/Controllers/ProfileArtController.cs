@@ -1,6 +1,7 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
 using ArtHub.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace ArtHub.Controllers
 {
+    [Authorize]
     [Route("api/Profile/{profileId}/Art")]
     [ApiController]
     public class ProfileArtController : ControllerBase
