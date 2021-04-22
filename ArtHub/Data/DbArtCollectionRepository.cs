@@ -27,7 +27,6 @@ namespace ArtHub.Data
         private bool ArtCollectionExists(ArtCollection artCollection)
         {
             return _context.ArtCollections.Any(ac => ac.ArtId == artCollection.ArtId && ac.CollectionId == artCollection.CollectionId);
-
         }
     }
 }

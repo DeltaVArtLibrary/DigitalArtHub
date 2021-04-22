@@ -14,16 +14,21 @@ namespace ArtHub.Controllers
     public class ArtCollectionController : ControllerBase
     {
         private readonly IArtCollectionRepository artCollectionRepository;
+        private readonly IProfileCollectionRepository profileCollectionRepository;
 
-        public ArtCollectionController(IArtCollectionRepository artCollectionRepository)
+        public ArtCollectionController(IArtCollectionRepository artCollectionRepository, IProfileCollectionRepository profileCollectionRepository)
         {
             this.artCollectionRepository = artCollectionRepository;
+            this.profileCollectionRepository = profileCollectionRepository;
         }
         // POST api/Profile/{profileId}/Collection/{collectionId}
         [HttpPost]
         public async Task<ActionResult> AddToCollection(int profileId, int collectionId, [FromBody] ArtCollection artCollection)
         {
-            if(collectionId)
+            if (!profileCollectionRepository.ValidateCollection(profileId, collectionId))
+                return BadRequest();
+            if (collectionId != artCollection.CollectionId)
+                return BadRequest();
             if (await artCollectionRepository.AddToCollection(artCollection))
                 return BadRequest();
             return NoContent();

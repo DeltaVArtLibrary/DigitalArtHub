@@ -13,6 +13,7 @@ namespace ArtHub.Data.Interfaces
         Task<IEnumerable<CollectionDto>> GetAllProfileCollections(int profileId);
         Task<CollectionDto> GetProfileCollection(int collectionId);
         Task<bool> UpdateProfileCollection(Collection update);
+        bool ValidateCollection(int profileId, int collectionId);
 
     }
 }
