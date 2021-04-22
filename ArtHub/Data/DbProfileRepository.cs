@@ -36,25 +36,46 @@ namespace ArtHub.Data.Interfaces
                 .FirstOrDefaultAsync(p => p.Id == Id);
         }
 
-        public async Task<List<Profile>> GetProfiles()
+        public async Task<List<ProfileDto>> GetProfiles()
         {
-
-            // may change to use Dto
-            return await _context.Profiles.ToListAsync();
+            return await _context.Profiles
+                .Select(profile => new ProfileDto
+                {
+                    Description = profile.Description,
+                    DisplayName = profile.DisplayName,
+                    Id = profile.ProfileId,
+                    Members = profile.ProfileMember.Select(p => new ProfileMemberDto
+                    {
+                        Username = p.User.UserName,
+                        UserId = p.UserId,
+                    }).ToList()
+                })
+                .ToListAsync();
         }
 
-        public async Task<ProfileDto> CreateProfile(Profile profile)
+        public async Task<ProfileDto> CreateProfile(CreateProfileDto profile)
         {
-            _context.Profiles.Add(profile);
+            Profile newProfile = new Profile
+            {
+                DisplayName = profile.DisplayName,
+                Description = profile.Description
+            };
+            _context.Profiles.Add(newProfile);
             await _context.SaveChangesAsync();
 
             return await GetProfile(profile.ProfileId);
         }
 
 
-        public async Task<bool> UpdateProfile(Profile profile)
+        public async Task<bool> UpdateProfile(CreateProfileDto profile)
         {
-            _context.Entry(profile).State = EntityState.Modified;
+            Profile newProfile = new Profile
+            {
+                DisplayName = profile.DisplayName,
+                Description = profile.Description
+            };
+
+            _context.Entry(newProfile).State = EntityState.Modified;
 
             try
             {
@@ -64,7 +85,7 @@ namespace ArtHub.Data.Interfaces
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProfileExists(profile.ProfileId))
+                if (!ProfileExists(newProfile.ProfileId))
                 {
                     return false;
                 }

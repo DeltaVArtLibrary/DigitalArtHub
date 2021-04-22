@@ -23,4 +23,10 @@ namespace ArtHub.Models
         public List<Collection> Collection { get; set; }
         public List<ProfileMember> ProfileMember { get; set; }
     }
+    public class CreateProfileDto
+    {
+        public int ProfileId { get; set; }
+        public string DisplayName { get; set; }
+        public string Description { get; set; }
+    }
 }
