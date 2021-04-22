@@ -1,4 +1,6 @@
-﻿using ArtHub.Models.Api;
+﻿using ArtHub.Data.Interfaces;
+using ArtHub.Models;
+using ArtHub.Models.Api;
 using ArtHub.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,23 +16,33 @@ namespace ArtHub.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly IProfileRepository profileRepository;
         private readonly IUserService userService;
+        private readonly IProfileMembersRepository profileMemberRepository;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IProfileRepository profileRepository, IProfileMembersRepository profileMemberRepository)
         {
+            this.profileMemberRepository = profileMemberRepository;
+            this.profileRepository = profileRepository;
             this.userService = userService;
         }
 
         [AllowAnonymous]
         // uses registerData model to create a new user
         [HttpPost("Register")]
-        public async Task<ActionResult<UserDto>> Register(RegisterData data)
+        public async Task<ActionResult<ProfileDto>> Register(RegisterData data)
         {
             var user = await userService.Register(data, this.ModelState);
             if (!ModelState.IsValid)
                 return BadRequest(new ValidationProblemDetails(ModelState));
 
-            return Ok(user);
+            Profile profile = new Profile { DisplayName = data.Username };
+
+            var profileDto = await profileRepository.CreateProfile(profile);
+
+            profileDto = await profileMemberRepository.CreateProfileMember(new ProfileMember { ProfileId = profileDto.Id, UserId = user.Id });
+
+            return Ok(profileDto);
         }
 
         [AllowAnonymous]
