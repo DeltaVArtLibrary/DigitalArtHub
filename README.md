@@ -18,7 +18,7 @@ Created and finished by:
 
 
 # Link to Deployed Site
-![Digital Art Hub](https://digitalarthub.azurewebsites.net/index.html)
+[Digital Art Hub](https://digitalarthub.azurewebsites.net/index.html)
 
 ### ERD diagram
 This is our first rough example for our ERD.
