@@ -1,5 +1,6 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
+using ArtHub.Models.Api;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ArtHub.Controllers
 {
-    [Route("api/Profile/{profileId/Art")]
+    [Route("api/Profile/{profileId}/Art")]
     [ApiController]
     public class ProfileArtController : ControllerBase
     {
@@ -19,6 +20,27 @@ namespace ArtHub.Controllers
         {
             this.artRepository = artRepository;
         }
+        // GET: api/Art
+        [HttpGet]
+        public async Task<ActionResult<List<AllArtDto>>> GetAllArt(int profileId)
+        {
+            var art = await artRepository.GetAllArt();
+            return Ok(art.Where(a => a.ProfileId == profileId));
+        }
+
+        // GET: api/Art/5
+        [HttpGet("{artId}")]
+        public async Task<ActionResult<ArtDto>> GetArt(int id)
+        {
+            var art = await artRepository.GetArt(id);
+            if (art == null)
+            {
+                return NotFound();  //Implicit conversion to ActionResult<Art>
+            }
+
+            return art;
+        }
+
         // PUT: api/Arts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{artId}")]
@@ -50,7 +72,7 @@ namespace ArtHub.Controllers
             var newArt = await artRepository.CreateArt(art);
 
 
-            return CreatedAtAction("GetArt", new { id = newArt.ArtId }, newArt);
+            return CreatedAtAction("GetArt", new { profileId = newArt.ProfileId, artId = newArt.ArtId }, newArt);
         }
 
         // DELETE: api/Arts/5
