@@ -42,7 +42,7 @@ namespace ArtHub.Controllers
 
             profileDto = await profileMemberRepository.CreateProfileMember(new ProfileMember { ProfileId = profileDto.Id, UserId = user.Id });
 
-            return Ok(profileto);
+            return Ok(profileDto);
         }
 
         [AllowAnonymous]
