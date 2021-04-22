@@ -66,8 +66,7 @@ namespace ArtHub.Controllers
         [HttpPost] // Post means create
         public async Task<ActionResult<Profile>> CreateProfile(CreateProfileDto profile)
         {
-            /*_context.Profiles.Add(profile);
-            await _context.SaveChangesAsync();*/
+           
             var profileDto = await profileRepository.CreateProfile(profile);
 
 
@@ -75,22 +74,5 @@ namespace ArtHub.Controllers
         }
 
 
-        /*
-        // DELETE: api/Profile/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProfile(int id)
-        {
-            var profile = await _context.Profiles.FindAsync(id);
-            if (profile == null)
-            {
-                return NotFound();
-            }
-
-            _context.Profiles.Remove(profile);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-        */
     }
 }
