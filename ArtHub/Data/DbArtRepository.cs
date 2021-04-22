@@ -52,15 +52,32 @@ namespace ArtHub.Data
             
         }
 
-        public async Task CreateArt(Art art)
+        public async Task<ArtDto> CreateArt(CreateArtData art)
         {
-            _context.Art.Add(art);
+            Art newArt = new Art
+            {
+                ProfileId = art.ProfileId,
+                Title = art.Title,
+                Content = art.Content,
+                UploadDate = DateTime.Now,
+                Description = art.Description
+            };
+            _context.Art.Add(newArt);
             await _context.SaveChangesAsync();
+            return await GetArt(newArt.ArtId);
         }
 
-        public async Task<bool> UpdateArt(int id, Art art)
+        public async Task<bool> UpdateArt(CreateArtData art)
         {
-            _context.Entry(art).State = EntityState.Modified;
+            Art newArt = new Art
+            {
+                ArtId = art.ArtId,
+                ProfileId = art.ProfileId,
+                Title = art.Title,
+                Content = art.Content,
+                Description = art.Description
+            };
+            _context.Entry(newArt).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();
@@ -68,7 +85,7 @@ namespace ArtHub.Data
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ArtExists(id))
+                if (!ArtExists(art.ArtId))
                 {
                     return false;
                 }
@@ -79,10 +96,10 @@ namespace ArtHub.Data
             }            
         }
 
-        public async Task<bool> DeleteArt(int id)
+        public async Task<bool> DeleteArt(int profileId, int artId)
         {            
-            Art art = await _context.Art.FindAsync(id); 
-            if (art == null)
+            Art art = await _context.Art.FindAsync(artId); 
+            if (art == null || art.ProfileId != profileId)
             {
                 return false;
             }
