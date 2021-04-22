@@ -52,7 +52,7 @@ namespace ArtHub.Data
             
         }
 
-        public async Task CreateArt(CreateArtData art)
+        public async Task<ArtDto> CreateArt(CreateArtData art)
         {
             Art newArt = new Art
             {
@@ -63,6 +63,7 @@ namespace ArtHub.Data
             };
             _context.Art.Add(newArt);
             await _context.SaveChangesAsync();
+            return await GetArt(newArt.ArtId);
         }
 
         public async Task<bool> UpdateArt(int id, CreateArtData art)

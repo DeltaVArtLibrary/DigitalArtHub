@@ -48,7 +48,7 @@ namespace ArtHub.Controllers
         // PUT: api/Arts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateArt(int id, Art art)
+        public async Task<IActionResult> UpdateArt(int id, CreateArtData art)
         {
             if (id != art.ArtId) 
             {
@@ -66,11 +66,12 @@ namespace ArtHub.Controllers
         // POST: api/Arts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Art>> CreateArt(Art art)
+        public async Task<ActionResult<Art>> CreateArt(CreateArtData art)
         {
-            await artRepository.CreateArt(art);
+            var newArt = await artRepository.CreateArt(art);
+            
 
-            return CreatedAtAction("GetArt", new { id = art.ArtId }, art);
+            return CreatedAtAction("GetArt", new { id = newArt.ArtId }, newArt);
         }
 
         // DELETE: api/Arts/5

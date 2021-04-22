@@ -11,7 +11,7 @@ namespace ArtHub.Data.Interfaces
     {
         Task<List<AllArtDto>> GetAllArt();
         Task<ArtDto> GetArt(int id);
-        Task CreateArt(CreateArtData art);
+        Task<ArtDto> CreateArt(CreateArtData art);
         Task<bool> UpdateArt(int id, CreateArtData art);
         Task<bool> DeleteArt(int id);
     }
