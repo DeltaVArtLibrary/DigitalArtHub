@@ -7,7 +7,7 @@ Created and finished by:
     - [Github](https://github.com/Vavyo)
 - Jean McMahon 
     - [Github](https://github.com/jmcia2020)
-- Adara Townsends 
+- Adara Townsend
     - [Github](https://github.com/adard2002)
 - Ben Hemann 
     - [Github](https://github.com/Kozer2)
@@ -18,7 +18,8 @@ Created and finished by:
 
 # Links to different parts of code
 
-
+# Link to Deployed Website
+[Digital Art Hub](https://digitalarthub.azurewebsites.net/index.html)
 
 
 ### ERD diagram
