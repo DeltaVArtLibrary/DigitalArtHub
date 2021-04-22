@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ArtHub.Data;
 using ArtHub.Models;
 using ArtHub.Data.Interfaces;
+using ArtHub.Models.Api;
 
 namespace ArtHub.Controllers
 {
@@ -26,13 +27,13 @@ namespace ArtHub.Controllers
 
         // GET: api/Collections
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Collection>>> GetCollections()
+        public async Task<ActionResult<IEnumerable<CollectionDto>>> GetCollections()
         {
             return Ok(await collectionRepository.GetAllCollections());
         }
         // GET: api/Collection/{collectionId}
         [HttpGet("{collectionId}")]
-        public async Task<ActionResult<Collection>> GetCollection(int collectionId)
+        public async Task<ActionResult<CollectionDto>> GetCollection(int collectionId)
         {
             var collection = await collectionRepository.GetCollection(collectionId);
 

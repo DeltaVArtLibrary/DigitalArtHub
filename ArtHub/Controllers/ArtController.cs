@@ -55,7 +55,7 @@ namespace ArtHub.Controllers
                 return BadRequest();
             }
 
-            if (!await artRepository.UpdateArt(id, art));
+            if (!await artRepository.UpdateArt(id, art))
             {
                 return NotFound();
             }
@@ -77,7 +77,7 @@ namespace ArtHub.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArt(int id)
         { 
-            if (!await artRepository.DeleteArt(id));
+            if (!await artRepository.DeleteArt(id))
             {
                 return NotFound();
             }

@@ -27,7 +27,6 @@ namespace ArtHub.Data
             };
             _context.Collections.Add(newCollection);
             await _context.SaveChangesAsync();
-
             return newCollection;
         }
 
@@ -49,11 +48,6 @@ namespace ArtHub.Data
                 .Where(c => c.ProfileId == profileId)
                 .ToListAsync();
 
-        }
-
-        public async Task<CollectionDto> GetProfileCollection(int collectionId)
-        {
-            return await new DbCollectionRepository(_context).GetCollection(collectionId);
         }
 
         public async Task<bool> UpdateProfileCollection(UpdateCollection collection)
