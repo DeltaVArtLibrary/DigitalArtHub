@@ -36,7 +36,7 @@ namespace ArtHub.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(new ValidationProblemDetails(ModelState));
 
-            Profile profile = new Profile { DisplayName = data.Username };
+            CreateProfileDto profile = new CreateProfileDto { DisplayName = data.Username };
 
             var profileDto = await profileRepository.CreateProfile(profile);
 
