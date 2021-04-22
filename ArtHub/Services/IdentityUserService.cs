@@ -6,9 +6,10 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
+
 namespace ArtHub.Services
 {
-    public class IdentityUserService : IUserService
+    public class IdentityUserService : IUserService, IProfileRepository
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly JwtTokenService tokenService;
@@ -50,6 +51,9 @@ namespace ArtHub.Services
 
             if (result.Succeeded)
                 return await GetUserDtoAsync(user);
+
+            // Create Profile from user data
+          
 
             foreach (var error in result.Errors)
             {
