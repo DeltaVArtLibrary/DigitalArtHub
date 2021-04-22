@@ -1,4 +1,6 @@
-﻿using ArtHub.Models.Api;
+﻿using ArtHub.Data.Interfaces;
+using ArtHub.Models;
+using ArtHub.Models.Api;
 using ArtHub.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +16,13 @@ namespace ArtHub.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly IProfileRepository profileRepository;
         private readonly IUserService userService;
 
-        public UsersController(IUserService userService)
+
+        public UsersController(IUserService userService, IProfileRepository profileRepository)
         {
+            this.profileRepository = profileRepository;
             this.userService = userService;
         }
 
@@ -29,6 +34,9 @@ namespace ArtHub.Controllers
             var user = await userService.Register(data, this.ModelState);
             if (!ModelState.IsValid)
                 return BadRequest(new ValidationProblemDetails(ModelState));
+
+            Profile profile = new Profile { DisplayName = data.Username };
+            await profileRepository.CreateProfile(profile);
 
             return Ok(user);
         }

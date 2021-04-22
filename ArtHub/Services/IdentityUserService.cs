@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ArtHub.Services
 {
-    public class IdentityUserService : IUserService, IProfileRepository
+    public class IdentityUserService : IUserService
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly JwtTokenService tokenService;

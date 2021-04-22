@@ -1,5 +1,6 @@
 ﻿using ArtHub.Models;
 using ArtHub.Models.Api;
+using ArtHub.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace ArtHub.Data.Interfaces
             return await _context.Profiles.ToListAsync();
         }
 
-        public async Task CreateProfile(Profile profile)
+        public async Task<ProfileDto> CreateProfile(Profile profile)
         {
             _context.Profiles.Add(profile);
             await _context.SaveChangesAsync();
