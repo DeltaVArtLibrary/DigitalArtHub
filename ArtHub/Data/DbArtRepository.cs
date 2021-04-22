@@ -52,15 +52,30 @@ namespace ArtHub.Data
             
         }
 
-        public async Task CreateArt(Art art)
+        public async Task CreateArt(CreateArtData art)
         {
-            _context.Art.Add(art);
+            Art newArt = new Art
+            {
+                ProfileId = art.ProfileId,
+                Title = art.Title,
+                Content = art.Content,
+                Description = art.Description
+            };
+            _context.Art.Add(newArt);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdateArt(int id, Art art)
+        public async Task<bool> UpdateArt(int id, CreateArtData art)
         {
-            _context.Entry(art).State = EntityState.Modified;
+            Art newArt = new Art
+            {
+                ArtId = id,
+                ProfileId = art.ProfileId,
+                Title = art.Title,
+                Content = art.Content,
+                Description = art.Description
+            };
+            _context.Entry(newArt).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();
