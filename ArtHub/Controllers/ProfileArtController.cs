@@ -23,6 +23,7 @@ namespace ArtHub.Controllers
             this.artRepository = artRepository;
         }
         // GET: api/Art
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<AllArtDto>>> GetAllArt(int profileId)
         {
@@ -31,6 +32,7 @@ namespace ArtHub.Controllers
         }
 
         // GET: api/Art/5
+        [AllowAnonymous]
         [HttpGet("{artId}")]
         public async Task<ActionResult<ArtDto>> GetArt(int id)
         {
@@ -45,6 +47,7 @@ namespace ArtHub.Controllers
 
         // PUT: api/Arts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{artId}")]
         public async Task<IActionResult> UpdateArt(int profileId, int artId, CreateArtData art)
         {
@@ -63,6 +66,7 @@ namespace ArtHub.Controllers
 
         // POST: api/Arts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Art>> CreateArt(int profileId, CreateArtData art)
         {
@@ -78,6 +82,7 @@ namespace ArtHub.Controllers
         }
 
         // DELETE: api/Arts/5
+        [Authorize]
         [HttpDelete("{artId}")]
         public async Task<IActionResult> DeleteArt(int profileId, int artId)
         {

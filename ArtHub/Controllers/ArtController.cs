@@ -27,6 +27,8 @@ namespace ArtHub.Controllers
         }
 
         // GET: api/Art
+        [AllowAnonymous]
+
         [HttpGet]
         public async Task<ActionResult<List<AllArtDto>>> GetAllArt()
         {
@@ -35,6 +37,7 @@ namespace ArtHub.Controllers
         }
 
         // GET: api/Art/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<ArtDto>> GetArt(int id)
         {
