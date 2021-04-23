@@ -74,7 +74,7 @@ namespace ArtHub.Services
             {
                 Id = user.Id,
                 Username = user.UserName,
-                Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(5)),
+                Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(30)),
             };
         }
     }
