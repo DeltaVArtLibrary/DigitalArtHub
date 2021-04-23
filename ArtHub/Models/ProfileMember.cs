@@ -15,4 +15,12 @@ namespace ArtHub.Models
         public Profile Profile { get; set; }
         public ApplicationUser User { get; set; }
     }
+
+    public class CreateProfileMember
+    {
+        public int ProfileId { get; set; }
+        public string UserId { get; set; }
+    }
+
+
 }
