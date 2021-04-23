@@ -21,8 +21,9 @@ namespace ArtHub.Data
         {
             return _context.ProfileMembers.Any(pm => pm.ProfileId == p && pm.UserId == m);
         }
-        public async Task<ProfileDto> CreateProfileMember(ProfileMember profileMember)
+        public async Task<ProfileDto> CreateProfileMember(CreateProfileMember profileMemberCreated)
         {
+            ProfileMember profileMember = new ProfileMember { ProfileId = profileMemberCreated.ProfileId, UserId = profileMemberCreated.UserId };
             if (!MemberExists(profileMember.ProfileId, profileMember.UserId))
             {
                 _context.ProfileMembers.Add(profileMember);

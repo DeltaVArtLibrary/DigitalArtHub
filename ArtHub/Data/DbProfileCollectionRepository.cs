@@ -55,7 +55,8 @@ namespace ArtHub.Data
 
         public async Task<bool> UpdateProfileCollection(UpdateCollection collection)
         {
-            _context.Entry(collection).State = EntityState.Modified;
+            Collection updatedCollection = new Collection { CollectionId = collection.CollectionId, Title = collection.Title, Description = collection.Description, ProfileId = collection.ProfileId};
+            _context.Entry(updatedCollection).State = EntityState.Modified;
 
             try
             {
@@ -66,7 +67,7 @@ namespace ArtHub.Data
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CollectionExists(collection.CollectionId))
+                if (!CollectionExists(updatedCollection.CollectionId))
                 {
                     return false;
                 }

@@ -12,7 +12,7 @@ namespace ArtHub.Data.Interfaces
       
         /*Task<List<ProfileMember>> GetProfileMembers();*/ // MAYBE NO NEED
         /*        Task<ProfileMember> GetProfileMember(int id);*/ // DO WE NEED THIS?!
-        Task<ProfileDto> CreateProfileMember(ProfileMember profileMember);
+        Task<ProfileDto> CreateProfileMember(CreateProfileMember profileMemberCreated);
         /*Task<bool> UpdateProfileMember(int id, ProfileMember profileMember);*/ // USERSTORY SAYS NO
     }
 }

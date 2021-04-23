@@ -69,10 +69,12 @@ namespace ArtHub.Data.Interfaces
 
         public async Task<bool> UpdateProfile(CreateProfileDto profile)
         {
+
             Profile newProfile = new Profile
             {
                 DisplayName = profile.DisplayName,
-                Description = profile.Description
+                Description = profile.Description,
+                ProfileId = profile.ProfileId, 
             };
 
             _context.Entry(newProfile).State = EntityState.Modified;
