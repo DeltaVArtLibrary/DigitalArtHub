@@ -79,8 +79,11 @@ namespace ArtHub.Data
         }
         public async Task<bool> AddToCollection(AddToArtCollection artCollection)
         {
-            if (ArtCollectionExists(artCollection) || ArtAndCollectionExist(artCollection))
+            if (ArtExistsInCollection(artCollection))
                 return false;
+            if (!ArtAndCollectionExist(artCollection))
+                return false;
+
             ArtCollection newAddition = new ArtCollection
             {
                 ArtId = artCollection.ArtId,
@@ -90,7 +93,7 @@ namespace ArtHub.Data
             await _context.SaveChangesAsync();
             return true;
         }
-        private bool ArtCollectionExists(AddToArtCollection artCollection)
+        private bool ArtExistsInCollection(AddToArtCollection artCollection)
         {
             return _context.ArtCollections.Any(ac => ac.ArtId == artCollection.ArtId && ac.CollectionId == artCollection.CollectionId);
         }
