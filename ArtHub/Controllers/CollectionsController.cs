@@ -28,12 +28,14 @@ namespace ArtHub.Controllers
         }
 
         // GET: api/Collections
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CollectionDto>>> GetCollections()
         {
             return Ok(await collectionRepository.GetAllCollections());
         }
         // GET: api/Collection/{collectionId}
+        [AllowAnonymous]
         [HttpGet("{collectionId}")]
         public async Task<ActionResult<CollectionDto>> GetCollection(int collectionId)
         {

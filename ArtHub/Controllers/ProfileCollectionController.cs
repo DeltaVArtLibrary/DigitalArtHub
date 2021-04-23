@@ -30,6 +30,7 @@ namespace ArtHub.Controllers
         }
 
         // GET: api/Profile/{profileId}/Collection
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CollectionDto>>> GetProfileCollections(int profileId)
         {
@@ -37,6 +38,7 @@ namespace ArtHub.Controllers
         }
 
         // GET: api/Profile/{profileId}/Collection/{collectionId}
+        [AllowAnonymous]
         [HttpGet("{collectionId}")]
         public async Task<ActionResult<CollectionDto>> GetCollection(int profileId, int collectionId)
         {
@@ -52,6 +54,7 @@ namespace ArtHub.Controllers
 
         // PUT: api/Profile/{profileId}/Collection/{collectionId}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{collectionId}")]
         public async Task<IActionResult> UpdateCollection(int profileId, int collectionId, UpdateCollection collection)
         {
@@ -70,6 +73,7 @@ namespace ArtHub.Controllers
 
         // POST: api/Profile/{profileId}/Collection
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<CollectionDto>> CreateCollection(int profileId, [FromBody] CreateCollection collection)
         {
@@ -82,6 +86,7 @@ namespace ArtHub.Controllers
         }
 
         // POST api/Profile/{profileId}/Collection/{collectionId}
+        [Authorize]
         [HttpPost("{collectionId}")]
         public async Task<ActionResult> AddToCollection(int profileId, int collectionId, [FromBody] AddToArtCollection artCollection)
         {

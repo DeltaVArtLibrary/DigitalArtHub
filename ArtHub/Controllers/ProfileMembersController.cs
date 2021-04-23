@@ -27,11 +27,12 @@ namespace ArtHub.Controllers
             this.profileMembersRepository = profileMembersRepository;
         }
 
-        
+
 
 
         // POST: api/ProfileMembers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ProfileDto>> PostProfileMember(ProfileMember profileMember)
         {

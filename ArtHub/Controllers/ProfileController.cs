@@ -25,6 +25,7 @@ namespace ArtHub.Controllers
         }
 
         // GET: api/Profile
+        [AllowAnonymous]
         [HttpGet] // Read from database
         public async Task<ActionResult<IEnumerable<ProfileDto>>> GetProfiles()
         {
@@ -32,6 +33,7 @@ namespace ArtHub.Controllers
         }
 
         // GET: api/Profile/5
+        [AllowAnonymous]
         [HttpGet("{ProfileId}")] // Read
         public async Task<ActionResult<ProfileDto>> GetProfile(int ProfileId)
         {
