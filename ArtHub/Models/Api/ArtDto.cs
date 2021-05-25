@@ -8,6 +8,7 @@ namespace ArtHub.Models.Api
     public class AllArtDto
     {
         public int ArtId { get; set; }
+        public string Content { get; set; }
 
         public string Title { get; set; }
 
