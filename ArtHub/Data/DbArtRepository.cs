@@ -26,7 +26,7 @@ namespace ArtHub.Data
                     ArtId = art.ArtId,
                     Title = art.Title,
                     Description = art.Description,
-
+                    Content = art.Content, // Added for front-end
                     ProfileId = art.ProfileId,
                     ProfileDisplayName = art.Profile.DisplayName,
                 })
