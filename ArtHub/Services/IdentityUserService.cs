@@ -1,5 +1,6 @@
 ﻿using ArtHub.Models.Api;
 using ArtHub.Models.Identity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
@@ -13,11 +14,13 @@ namespace ArtHub.Services
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly JwtTokenService tokenService;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public IdentityUserService(UserManager<ApplicationUser> userManager, JwtTokenService tokenService)
+        public IdentityUserService(UserManager<ApplicationUser> userManager, JwtTokenService tokenService, IHttpContextAccessor httpContextAccessor)
         {
             this.userManager = userManager;
             this.tokenService = tokenService;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public UserManager<ApplicationUser> UserManager { get; }
@@ -30,6 +33,12 @@ namespace ArtHub.Services
 
             return null;
 
+        }
+
+        public async Task<UserDto> GetCurrentUser()
+        {
+            var principal = httpContextAccessor.HttpContext.User;
+            return await GetUser(principal);
         }
 
         public async Task<UserDto> GetUser(ClaimsPrincipal principal)
