@@ -13,10 +13,12 @@ namespace ArtHub.Data.Interfaces
     {
 
         private readonly ArtHubDbContext _context;
+        private readonly IUserService userService;
 
-        public DbProfileRepository(ArtHubDbContext context)
+        public DbProfileRepository(ArtHubDbContext context, IUserService userService)
         {
             _context = context;
+            this.userService = userService;
         }
 
         public async Task<ProfileDto> GetProfile(int Id)
@@ -63,6 +65,12 @@ namespace ArtHub.Data.Interfaces
             _context.Profiles.Add(newProfile);
             await _context.SaveChangesAsync();
 
+            await CreateProfileMember(new CreateProfileMember
+            {
+                ProfileId = newProfile.ProfileId,
+                UserId = (await userService.GetCurrentUser()).Id
+            });
+
             return await GetProfile(newProfile.ProfileId);
         }
 
@@ -104,5 +112,36 @@ namespace ArtHub.Data.Interfaces
             return _context.Profiles.Any(p => p.ProfileId == Id);
         }
 
+        private bool MemberExists(int p, string m)
+        {
+            return _context.ProfileMembers.Any(pm => pm.ProfileId == p && pm.UserId == m);
+        }
+
+        public async Task<ProfileDto> CreateProfileMember(CreateProfileMember profileMemberCreated)
+        {
+            ProfileMember profileMember = new ProfileMember { ProfileId = profileMemberCreated.ProfileId, UserId = profileMemberCreated.UserId };
+            if (!MemberExists(profileMember.ProfileId, profileMember.UserId))
+            {
+                _context.ProfileMembers.Add(profileMember);
+                await _context.SaveChangesAsync();
+            }
+
+            return await GetProfile(profileMember.ProfileId);
+        }
+
+        public async Task<List<ProfileDto>> GetProfilesFromUser(string UserId)
+        {
+            return await _context.ProfileMembers.Where(pm => pm.UserId == UserId).Select(pm => new ProfileDto
+            {
+                Id = pm.Profile.ProfileId,
+                DisplayName = pm.Profile.DisplayName,
+                Description = pm.Profile.Description,
+                Members = pm.Profile.ProfileMember.Select(p => new ProfileMemberDto
+                {
+                    Username = p.User.UserName,
+                    UserId = p.UserId,
+                }).ToList()
+            }).ToListAsync();
+        }
     }
 }

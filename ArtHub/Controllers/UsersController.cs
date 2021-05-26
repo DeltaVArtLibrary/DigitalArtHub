@@ -18,11 +18,9 @@ namespace ArtHub.Controllers
     {
         private readonly IProfileRepository profileRepository;
         private readonly IUserService userService;
-        private readonly IProfileMembersRepository profileMemberRepository;
 
-        public UsersController(IUserService userService, IProfileRepository profileRepository, IProfileMembersRepository profileMemberRepository)
+        public UsersController(IUserService userService, IProfileRepository profileRepository)
         {
-            this.profileMemberRepository = profileMemberRepository;
             this.profileRepository = profileRepository;
             this.userService = userService;
         }
@@ -40,7 +38,7 @@ namespace ArtHub.Controllers
 
             var profileDto = await profileRepository.CreateProfile(profile);
 
-            profileDto = await profileMemberRepository.CreateProfileMember(new CreateProfileMember { ProfileId = profileDto.Id, UserId = user.Id });
+            profileDto = await profileRepository.CreateProfileMember(new CreateProfileMember { ProfileId = profileDto.Id, UserId = user.Id });
 
             return Ok(profileDto);
         }
@@ -62,6 +60,14 @@ namespace ArtHub.Controllers
         public async Task<UserDto> Self() 
         {
             return await userService.GetUser(User);
+        }
+
+        [Authorize]
+        [HttpGet("Profiles")]
+        public async Task<List<ProfileDto>> MyProfiles()
+        {
+            string userId = (await userService.GetCurrentUser()).Id;
+            return await profileRepository.GetProfilesFromUser(userId);
         }
     }
 }
