@@ -86,7 +86,7 @@ namespace ArtHub.Data.Interfaces
             };
 
             _context.Entry(newProfile).State = EntityState.Modified;
-
+            
             try
             {
                 await _context.SaveChangesAsync();
