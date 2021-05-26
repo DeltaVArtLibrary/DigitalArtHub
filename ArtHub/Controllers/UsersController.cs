@@ -18,13 +18,15 @@ namespace ArtHub.Controllers
     {
         private readonly IProfileRepository profileRepository;
         private readonly IUserService userService;
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IProfileMembersRepository profileMemberRepository;
 
-        public UsersController(IUserService userService, IProfileRepository profileRepository, IProfileMembersRepository profileMemberRepository)
+        public UsersController(IUserService userService, IProfileRepository profileRepository, IProfileMembersRepository profileMemberRepository, IHttpContextAccessor httpContextAccessor)
         {
             this.profileMemberRepository = profileMemberRepository;
             this.profileRepository = profileRepository;
             this.userService = userService;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         [AllowAnonymous]
@@ -65,9 +67,10 @@ namespace ArtHub.Controllers
         }
 
         [Authorize]
-        [HttpGet("{userId}/Profiles")]
-        public async Task<List<ProfileDto>> MyProfiles(string userId)
+        [HttpGet("Profiles")]
+        public async Task<List<ProfileDto>> MyProfiles()
         {
+            string userId = (await userService.GetCurrentUser()).Id;
             return await profileMemberRepository.GetProfilesFromUser(userId);
         }
     }
