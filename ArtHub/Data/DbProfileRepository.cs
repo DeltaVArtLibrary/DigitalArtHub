@@ -73,6 +73,24 @@ namespace ArtHub.Data.Interfaces
 
             return await GetProfile(newProfile.ProfileId);
         }
+        public async Task<ProfileDto> CreateProfile(CreateProfileDto profile, UserDto user)
+        {
+            Profile newProfile = new Profile
+            {
+                DisplayName = profile.DisplayName,
+                Description = profile.Description
+            };
+            _context.Profiles.Add(newProfile);
+            await _context.SaveChangesAsync();
+
+            await CreateProfileMember(new CreateProfileMember
+            {
+                ProfileId = newProfile.ProfileId,
+                UserId = user.Id
+            });
+
+            return await GetProfile(newProfile.ProfileId);
+        }
 
 
         public async Task<bool> UpdateProfile(CreateProfileDto profile)

@@ -36,7 +36,7 @@ namespace ArtHub.Controllers
 
             CreateProfileDto profile = new CreateProfileDto { DisplayName = data.Username };
 
-            var profileDto = await profileRepository.CreateProfile(profile);
+            var profileDto = await profileRepository.CreateProfile(profile, user);
 
             profileDto = await profileRepository.CreateProfileMember(new CreateProfileMember { ProfileId = profileDto.Id, UserId = user.Id });
 
