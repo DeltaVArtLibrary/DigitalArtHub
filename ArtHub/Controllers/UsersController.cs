@@ -63,5 +63,12 @@ namespace ArtHub.Controllers
         {
             return await userService.GetUser(User);
         }
+
+        [Authorize]
+        [HttpGet("[userId]/Profiles")]
+        public async Task<List<ProfileDto>> MyProfiles(string userId)
+        {
+            return await profileMemberRepository.GetProfilesFromUser(userId);
+        }
     }
 }
