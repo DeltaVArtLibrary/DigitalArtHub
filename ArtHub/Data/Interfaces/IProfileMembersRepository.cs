@@ -9,7 +9,7 @@ namespace ArtHub.Data.Interfaces
 {
     public interface IProfileMembersRepository
     {
-      
+        Task<List<ProfileDto>> GetProfilesFromUser(string UserId);
         /*Task<List<ProfileMember>> GetProfileMembers();*/ // MAYBE NO NEED
         /*        Task<ProfileMember> GetProfileMember(int id);*/ // DO WE NEED THIS?!
         Task<ProfileDto> CreateProfileMember(CreateProfileMember profileMemberCreated);

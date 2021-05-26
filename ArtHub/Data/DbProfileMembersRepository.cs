@@ -1,6 +1,7 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
 using ArtHub.Models.Api;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,19 @@ namespace ArtHub.Data
             return await new DbProfileRepository(_context).GetProfile(profileMember.ProfileId);
         }
 
-
+        public async Task<List<ProfileDto>> GetProfilesFromUser(string UserId)
+        {
+            return await _context.ProfileMembers.Where(pm => pm.UserId == UserId).Select(pm => new ProfileDto
+            {
+                Id = pm.Profile.ProfileId,
+                DisplayName = pm.Profile.DisplayName,
+                Description = pm.Profile.Description,
+                Members = pm.Profile.ProfileMember.Select(p => new ProfileMemberDto
+                {
+                    Username = p.User.UserName,
+                    UserId = p.UserId,
+                }).ToList()
+            }).ToListAsync();
+        }
     }
 }
