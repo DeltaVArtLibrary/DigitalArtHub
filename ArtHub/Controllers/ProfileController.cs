@@ -77,7 +77,7 @@ namespace ArtHub.Controllers
             var profileDto = await profileRepository.CreateProfile(profile);
 
 
-            return CreatedAtAction("GetProfile", new { Id = profileDto.Id }, profileDto);
+            return CreatedAtAction("GetProfile", new { profileId = profileDto.Id }, profileDto);
         }
 
 
