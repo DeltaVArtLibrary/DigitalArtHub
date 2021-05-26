@@ -13,6 +13,7 @@ namespace ArtHub.Services
     {
         Task<UserDto> Register(RegisterData data, ModelStateDictionary modelState);
         Task<UserDto> Authenticate(string username, string password);
+        Task<UserDto> GetCurrentUser();
         Task<UserDto> GetUser(ClaimsPrincipal user);
     }
 }
