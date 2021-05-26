@@ -59,7 +59,6 @@ namespace ArtHub
             services.AddTransient<IProfileRepository, DbProfileRepository>();
 
             services.AddTransient<JwtTokenService>();
-            services.AddTransient<IProfileMembersRepository, DbProfileMembersRepository>();
             services.AddAuthorization();
 
             services
