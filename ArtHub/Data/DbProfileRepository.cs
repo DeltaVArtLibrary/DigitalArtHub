@@ -13,10 +13,14 @@ namespace ArtHub.Data.Interfaces
     {
 
         private readonly ArtHubDbContext _context;
+        private readonly IUserService userService;
+        private readonly IProfileMembersRepository profileMembersRepository;
 
-        public DbProfileRepository(ArtHubDbContext context)
+        public DbProfileRepository(ArtHubDbContext context, IUserService userService, IProfileMembersRepository profileMembersRepository)
         {
             _context = context;
+            this.userService = userService;
+            this.profileMembersRepository = profileMembersRepository;
         }
 
         public async Task<ProfileDto> GetProfile(int Id)
@@ -62,6 +66,12 @@ namespace ArtHub.Data.Interfaces
             };
             _context.Profiles.Add(newProfile);
             await _context.SaveChangesAsync();
+
+            await profileMembersRepository.CreateProfileMember(new CreateProfileMember
+            {
+                ProfileId = newProfile.ProfileId,
+                UserId = (await userService.GetCurrentUser()).Id
+            });
 
             return await GetProfile(newProfile.ProfileId);
         }

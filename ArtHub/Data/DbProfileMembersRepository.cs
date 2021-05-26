@@ -13,9 +13,12 @@ namespace ArtHub.Data
     {
         private readonly ArtHubDbContext _context;
 
-        public DbProfileMembersRepository(ArtHubDbContext context)
+        public IProfileRepository ProfileRepository { get; }
+
+        public DbProfileMembersRepository(ArtHubDbContext context, IProfileRepository profileRepository)
         {
             _context = context;
+            this.ProfileRepository = profileRepository;
         }
 
         private bool MemberExists(int p, string m)
@@ -31,7 +34,7 @@ namespace ArtHub.Data
                 await _context.SaveChangesAsync();
             }
 
-            return await new DbProfileRepository(_context).GetProfile(profileMember.ProfileId);
+            return await ProfileRepository.GetProfile(profileMember.ProfileId);
         }
 
         public async Task<List<ProfileDto>> GetProfilesFromUser(string UserId)
