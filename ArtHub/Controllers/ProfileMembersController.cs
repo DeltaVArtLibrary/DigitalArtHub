@@ -19,12 +19,12 @@ namespace ArtHub.Controllers
     public class ProfileMembersController : ControllerBase
     {
         
-        private readonly IProfileMembersRepository profileMembersRepository;
+        private readonly IProfileRepository profileRepository;
 
-        public ProfileMembersController(ArtHubDbContext context, IProfileMembersRepository profileMembersRepository)
+        public ProfileMembersController(ArtHubDbContext context, IProfileRepository profileRepository)
         {
             
-            this.profileMembersRepository = profileMembersRepository;
+            this.profileRepository = profileRepository;
         }
 
 
@@ -37,7 +37,7 @@ namespace ArtHub.Controllers
         public async Task<ActionResult<ProfileDto>> PostProfileMember(CreateProfileMember profileMember)
         {
 
-            return Ok(await profileMembersRepository.CreateProfileMember(profileMember));
+            return Ok(await profileRepository.CreateProfileMember(profileMember));
         }
 
     }
