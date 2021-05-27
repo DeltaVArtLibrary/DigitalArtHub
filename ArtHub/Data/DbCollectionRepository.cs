@@ -31,6 +31,7 @@ namespace ArtHub.Data
                     {
                         ArtId = art.ArtId,
                         Title = art.Art.Title,
+                        Content = art.Art.Content,
                         Description = art.Art.Description,
                         ProfileId = art.Art.ProfileId,
                         ProfileDisplayName = art.Art.Profile.DisplayName
@@ -52,6 +53,7 @@ namespace ArtHub.Data
                     {
                         ArtId = art.ArtId,
                         Title = art.Art.Title,
+                        Content = art.Art.Content,
                         Description = art.Art.Description,
                         ProfileId = art.Art.ProfileId,
                         ProfileDisplayName = art.Art.Profile.DisplayName
