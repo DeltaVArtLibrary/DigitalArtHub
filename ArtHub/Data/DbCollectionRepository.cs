@@ -24,13 +24,18 @@ namespace ArtHub.Data
                 .Select(collection => new CollectionDto
                 {
                     CollectionId = collection.CollectionId,
-                    ProfileId = collection.ProfileId,
+                    Profile = new ProfileDto { 
+                        Id = collection.Profile.ProfileId,
+                        Description = collection.Profile.Description,
+                        DisplayName = collection.Profile.DisplayName,
+                    },
                     Title = collection.Title,
                     Description = collection.Description,
                     Art = collection.ArtCollections.Select(art => new AllArtDto
                     {
                         ArtId = art.ArtId,
                         Title = art.Art.Title,
+                        Content = art.Art.Content,
                         Description = art.Art.Description,
                         ProfileId = art.Art.ProfileId,
                         ProfileDisplayName = art.Art.Profile.DisplayName
@@ -45,13 +50,19 @@ namespace ArtHub.Data
                 .Select(collection => new CollectionDto
                 {
                     CollectionId = collection.CollectionId,
-                    ProfileId = collection.ProfileId,
+                    Profile = new ProfileDto
+                    {
+                        Id = collection.Profile.ProfileId,
+                        Description = collection.Profile.Description,
+                        DisplayName = collection.Profile.DisplayName,
+                    },
                     Title = collection.Title,
                     Description = collection.Description,
                     Art = collection.ArtCollections.Select(art => new AllArtDto
                     {
                         ArtId = art.ArtId,
                         Title = art.Art.Title,
+                        Content = art.Art.Content,
                         Description = art.Art.Description,
                         ProfileId = art.Art.ProfileId,
                         ProfileDisplayName = art.Art.Profile.DisplayName
