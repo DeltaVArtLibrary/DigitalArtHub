@@ -24,7 +24,11 @@ namespace ArtHub.Data
                 .Select(collection => new CollectionDto
                 {
                     CollectionId = collection.CollectionId,
-                    ProfileId = collection.ProfileId,
+                    Profile = new ProfileDto { 
+                        Id = collection.Profile.ProfileId,
+                        Description = collection.Profile.Description,
+                        DisplayName = collection.Profile.DisplayName,
+                    },
                     Title = collection.Title,
                     Description = collection.Description,
                     Art = collection.ArtCollections.Select(art => new AllArtDto
@@ -46,7 +50,12 @@ namespace ArtHub.Data
                 .Select(collection => new CollectionDto
                 {
                     CollectionId = collection.CollectionId,
-                    ProfileId = collection.ProfileId,
+                    Profile = new ProfileDto
+                    {
+                        Id = collection.Profile.ProfileId,
+                        Description = collection.Profile.Description,
+                        DisplayName = collection.Profile.DisplayName,
+                    },
                     Title = collection.Title,
                     Description = collection.Description,
                     Art = collection.ArtCollections.Select(art => new AllArtDto
