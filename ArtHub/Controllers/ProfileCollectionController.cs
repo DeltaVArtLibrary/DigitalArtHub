@@ -43,7 +43,7 @@ namespace ArtHub.Controllers
         public async Task<ActionResult<CollectionDto>> GetCollection(int profileId, int collectionId)
         {
             var collection = await collectionRepository.GetCollection(collectionId);
-            if (collection.ProfileId != profileId)
+            if (collection.Profile.Id != profileId)
                 return BadRequest();
 
             if (collection == null)
