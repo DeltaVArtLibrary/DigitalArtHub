@@ -60,6 +60,7 @@ namespace ArtHub
 
             services.AddTransient<JwtTokenService>();
             services.AddAuthorization();
+            services.AddSingleton<IFileService, AzureFileService>();
 
             services
                 .AddAuthentication(options =>

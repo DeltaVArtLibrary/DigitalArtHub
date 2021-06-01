@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
@@ -35,10 +38,10 @@ namespace ArtHub.Services
             });
 
             // Actually do the upload
-            var blobFile = container.GetBlockBlobReference(productImage.FileName);
+            var blobFile = container.GetBlockBlobReference(artImage.FileName);
 
 
-            using var imageStream = productImage.OpenReadStream();
+            using var imageStream = artImage.OpenReadStream();
             await blobFile.UploadFromStreamAsync(imageStream);
             return blobFile.Uri.ToString();
         }
