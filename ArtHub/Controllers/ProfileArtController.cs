@@ -1,6 +1,7 @@
 ﻿using ArtHub.Data.Interfaces;
 using ArtHub.Models;
 using ArtHub.Models.Api;
+using ArtHub.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,12 @@ namespace ArtHub.Controllers
     public class ProfileArtController : ControllerBase
     {
         private readonly IArtRepository artRepository;
+        private readonly IFileService fileService;
 
-        public ProfileArtController(IArtRepository artRepository)
+        public ProfileArtController(IArtRepository artRepository, IFileService fileService)
         {
             this.artRepository = artRepository;
+            this.fileService = fileService;
         }
         // GET: api/Art
         [AllowAnonymous]
@@ -68,7 +71,7 @@ namespace ArtHub.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<Art>> CreateArt(int profileId, CreateArtData art)
+        public async Task<ActionResult<Art>> CreateArt(int profileId, CreateArtData art, IFormFile artImage)
         {
             if (profileId != art.ProfileId)
             {
