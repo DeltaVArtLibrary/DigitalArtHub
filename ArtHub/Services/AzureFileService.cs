@@ -29,7 +29,7 @@ namespace ArtHub.Services
         public async Task<string> Create(IFormFile artImage)
         {
             // Access to a storage Container
-            var container = cloudBlobClient.GetContainerReference("products");
+            var container = cloudBlobClient.GetContainerReference("art");
             await container.CreateIfNotExistsAsync();
             await container.SetPermissionsAsync(new BlobContainerPermissions
             {
@@ -47,9 +47,24 @@ namespace ArtHub.Services
         }
 
 
-        public Task<string> Update(IFormFile artImage)
+        public async Task<string> Update(IFormFile artImage)
         {
-            throw new NotImplementedException();
+            // Access to a storage Container
+            var container = cloudBlobClient.GetContainerReference("art");
+            await container.CreateIfNotExistsAsync();
+            await container.SetPermissionsAsync(new BlobContainerPermissions
+            {
+                // Allow anonymous access to individual files *if you have the link*
+                PublicAccess = BlobContainerPublicAccessType.Blob,
+            });
+
+            // Actually do the upload
+            var blobFile = container.GetBlockBlobReference(artImage.FileName);
+
+
+            using var imageStream = artImage.OpenReadStream();
+            await blobFile.UploadFromStreamAsync(imageStream);
+            return blobFile.Uri.ToString();
         }
     }
 }

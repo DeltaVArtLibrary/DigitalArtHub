@@ -57,10 +57,11 @@ namespace ArtHub
             services.AddTransient<IProfileCollectionRepository, DbProfileCollectionRepository>();
 
             services.AddTransient<IProfileRepository, DbProfileRepository>();
+            services.AddSingleton<IFileService, AzureFileService>();
 
             services.AddTransient<JwtTokenService>();
             services.AddAuthorization();
-            services.AddSingleton<IFileService, AzureFileService>();
+            
 
             services
                 .AddAuthentication(options =>
