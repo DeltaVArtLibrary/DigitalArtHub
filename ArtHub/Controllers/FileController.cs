@@ -16,9 +16,6 @@ namespace ArtHub.Controllers
         {
             return Ok();
         }
-        public IActionResult File()
-        {
-            return View();
-        }
+      
     }
 }

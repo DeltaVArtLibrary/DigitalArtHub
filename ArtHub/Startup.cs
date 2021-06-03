@@ -109,6 +109,12 @@ namespace ArtHub
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(policy =>
+            {
+                policy.AllowAnyOrigin();
+                policy.AllowAnyMethod();
+                policy.AllowAnyHeader();
+            });
 
             app.UseSwagger(options => {
                 options.RouteTemplate = "/api/{documentName}/swagger.json";
@@ -126,12 +132,7 @@ namespace ArtHub
 
             app.UseRouting();
             // to let our front end talk to the backend
-            app.UseCors(policy =>
-            {
-                policy.AllowAnyOrigin();
-                policy.AllowAnyMethod();
-                policy.AllowAnyHeader();
-            });
+            
             // add in Authentication and Authorization
             app.UseAuthentication();
             app.UseAuthorization();
