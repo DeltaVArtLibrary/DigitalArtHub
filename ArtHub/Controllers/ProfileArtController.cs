@@ -54,6 +54,8 @@ namespace ArtHub.Controllers
         [HttpPut("{artId}")]
         public async Task<IActionResult> UpdateArt(int profileId, int artId, CreateArtData art)
         {
+            // for update, delete current art, replace with new art
+
             if (artId != art.ArtId || profileId != art.ProfileId)
             {
                 return BadRequest();
@@ -71,7 +73,7 @@ namespace ArtHub.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<Art>> CreateArt(int profileId, CreateArtData art, IFormFile artImage)
+        public async Task<ActionResult<Art>> CreateArt(int profileId, CreateArtData art, IFormFile artFile)
         {
             if (profileId != art.ProfileId)
             {

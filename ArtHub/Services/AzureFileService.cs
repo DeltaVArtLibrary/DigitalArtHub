@@ -26,7 +26,7 @@ namespace ArtHub.Services
             cloudBlobClient = storageAccount.CreateCloudBlobClient();
         }
 
-        public async Task<string> Create(IFormFile artImage)
+        public async Task<string> Create(IFormFile artFile)
         {
             // Access to a storage Container
             var container = cloudBlobClient.GetContainerReference("art");
@@ -38,16 +38,16 @@ namespace ArtHub.Services
             });
 
             // Actually do the upload
-            var blobFile = container.GetBlockBlobReference(artImage.FileName);
+            var blobFile = container.GetBlockBlobReference(artFile.FileName);
 
 
-            using var imageStream = artImage.OpenReadStream();
+            using var imageStream = artFile.OpenReadStream();
             await blobFile.UploadFromStreamAsync(imageStream);
             return blobFile.Uri.ToString();
         }
 
 
-        public async Task<string> Update(IFormFile artImage)
+        public async Task<string> Update(IFormFile artFile)
         {
             // Access to a storage Container
             var container = cloudBlobClient.GetContainerReference("art");
@@ -59,10 +59,10 @@ namespace ArtHub.Services
             });
 
             // Actually do the upload
-            var blobFile = container.GetBlockBlobReference(artImage.FileName);
+            var blobFile = container.GetBlockBlobReference(artFile.FileName);
 
 
-            using var imageStream = artImage.OpenReadStream();
+            using var imageStream = artFile.OpenReadStream();
             await blobFile.UploadFromStreamAsync(imageStream);
             return blobFile.Uri.ToString();
         }

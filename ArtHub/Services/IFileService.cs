@@ -8,8 +8,8 @@ namespace ArtHub.Services
 {
     public interface IFileService
     {
-        Task<string> Create(IFormFile artImage);
+        Task<string> Create(IFormFile artFile);
         // need an update
-        Task<string> Update(IFormFile artImage);
+        Task<string> Update(IFormFile artFile);
     }
 }
